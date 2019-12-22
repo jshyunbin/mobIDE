@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:mobide/ui/home_page.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -23,10 +24,8 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
   //TODO: replace the Text classes to each page widgets.
-  static const List<Widget> _pageWidgets = <Widget> [
-    Text(
-      'Index 0: Home'
-    ),
+  static List<Widget> _pageWidgets = <Widget> [
+    HomePage(),
     Text(
       'Index 1: SSH'
     ),
