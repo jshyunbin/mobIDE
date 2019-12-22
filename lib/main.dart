@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
 
       ),
-      home: MainPage(title: 'mobIDE Home Page'),
+      home: MyHomePage(title: 'mobIDE Demo'),
     );
   }
 }
