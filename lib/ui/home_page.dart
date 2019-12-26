@@ -113,7 +113,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     ProjectContent projectContent = ProjectContent(title: 'sample 0', description: 'Lorem ipsum dolor '
-        'sit amet, consectetur adipiscing elit.', sshId: null,
+        'sit amet, consectetur adipiscing elit.', sshId: 'jhb-gram',
         initializedDate: '2019-12-24', modifiedDate: '2019-12-24',);
 
     return ListView(

@@ -22,18 +22,59 @@ class ProjectPage extends StatelessWidget {
   Widget build(BuildContext context) {
     //TODO: add project page
     return Scaffold(
-      body: Row(
-        children: <Widget>[
-          Text(projectContent.title),
-
-        ],
+      body: Container(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(projectContent.description, style: TextStyle(
+              fontSize: 20,
+            ),),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Chip(
+                  label: Row(children: <Widget>[Text('SSH Connection '
+                      'Success'), Icon(Icons.check)
+                  ],),
+                  backgroundColor: Color.fromARGB(100, 52, 235, 100),
+                ),
+                Chip(
+                  label: Row(children: <Widget>[Text('Git '
+                      'Success'), Icon(Icons.check)
+                  ],),
+                  backgroundColor: Color.fromARGB(100, 52, 235, 100),
+                ),
+                Chip(
+                  label: Row(children: <Widget>[Text('SSH Connection '
+                      'Success'), Icon(Icons.check)
+                  ],),
+                  backgroundColor: Color.fromARGB(100, 52, 235, 100),
+                )
+              ],
+            ),
+            Divider(),
+            Text('this is where the files should look'),
+          ],
+        ),
       ),
       appBar: AppBar(
-        leading: Icon(Icons.keyboard_arrow_left),
+        leading: IconButton(
+          icon: Icon(Icons.keyboard_arrow_left),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(projectContent.title),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: null,
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.create),
+        child: Icon(Icons.add),
         onPressed: null,
       ),
     );
