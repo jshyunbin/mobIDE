@@ -25,7 +25,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   //TODO: replace the Text classes to each page widgets.
   static List<Widget> _pageWidgets = <Widget> [
-    HomePage(),
+    //TODO: set toDestination parameter
+    HomePage(toDestination: null,),
     Text(
       'Index 1: SSH'
     ),
