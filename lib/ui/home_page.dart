@@ -119,21 +119,11 @@ class ProjectListItem extends StatelessWidget {
   }
 }
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   HomePage({Key key, this.toDestination}): super(key: key);
 
   final Object toDestination;
 
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State {
-
-  void _onUpdate() {
-    setState(() {
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -142,7 +132,8 @@ class _HomePageState extends State {
       children: <Widget>[
         ProjectListItem(title: 'sample 0', description: 'Lorem ipsum dolor '
             'sit amet, consectetur adipiscing elit.', sshId: null,
-          initializedDate: '2019-12-24', modifiedDate: '2019-12-24', ),
+          initializedDate: '2019-12-24', modifiedDate: '2019-12-24',
+          callBack: toDestination,),
         ProjectListItem(title: 'sample 0', description: 'Lorem ipsum dolor '
             'sit amet, consectetur adipiscing elit.', sshId: null,
           initializedDate: '2019-12-24', modifiedDate: '2019-12-24',),
@@ -167,5 +158,4 @@ class _HomePageState extends State {
       ],
     );
   }
-
 }
