@@ -22,8 +22,19 @@ class ProjectPage extends StatelessWidget {
   Widget build(BuildContext context) {
     //TODO: add project page
     return Scaffold(
-      body: Center(
-        child: Text('${projectContent.title}')
+      body: Row(
+        children: <Widget>[
+          Text(projectContent.title),
+
+        ],
+      ),
+      appBar: AppBar(
+        leading: Icon(Icons.keyboard_arrow_left),
+        title: Text(projectContent.title),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.create),
+        onPressed: null,
       ),
     );
   }
