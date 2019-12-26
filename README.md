@@ -1,5 +1,7 @@
 # mobide
 
+[![Build Status](https://img.shields.io/github/workflow/status/jshyunbin/mobIDE/Flutter%20CI)](https://github.com/jshyunbin/mobIDE/actions)
+
 A flutter implementation of mobIDE app.
 
 ## Getting Started
