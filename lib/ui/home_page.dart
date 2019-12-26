@@ -96,7 +96,7 @@ class ProjectListItem extends StatelessWidget {
         ),
         onTap: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) =>
-              ProjectPage()),);
+              ProjectPage(projectContent: projectContent,)),);
           },
       ),
     );

@@ -14,11 +14,17 @@ class ProjectContent {
 
 class ProjectPage extends StatelessWidget {
 
-  const ProjectPage({Key key}) : super(key: key);
+  const ProjectPage({Key key, this.projectContent}) : super(key: key);
 
+  final ProjectContent projectContent;
 
   @override
   Widget build(BuildContext context) {
-    return Text('Project Page');
+    //TODO: add project page
+    return Scaffold(
+      body: Center(
+        child: Text('${projectContent.title}')
+      ),
+    );
   }
 }
