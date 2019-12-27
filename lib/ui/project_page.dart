@@ -54,6 +54,7 @@ class ProjectPage extends StatelessWidget {
               ],
             ),
             Divider(),
+            //TODO: Use datatable widget to show files
             Text('this is where the files should look'),
           ],
         ),

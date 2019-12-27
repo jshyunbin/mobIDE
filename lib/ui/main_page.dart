@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:mobide/ui/home_page.dart';
+import 'package:mobide/ui/settings_page.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -30,9 +31,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Text(
       'Index 1: SSH'
     ),
-    Text(
-      'Index 2: Settings'
-    ),
+    SettingsPage(),
   ];
 
   void _FABPressed() {
@@ -84,11 +83,12 @@ class _MyHomePageState extends State<MyHomePage> {
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: (_selectedIndex==0)?FloatingActionButton(
         onPressed: _FABPressed,
-        tooltip: 'Add',
+        tooltip: 'New Project',
         child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ): null, // This trailing comma makes auto-formatting nicer for build
+      // methods.
     );
   }
 }
