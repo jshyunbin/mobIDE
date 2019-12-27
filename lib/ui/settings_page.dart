@@ -16,28 +16,27 @@ class SettingsPage extends StatefulWidget{
 
 class _SettingsPageState extends State<SettingsPage> {
 
-  int selectedIndex = 0;
+  int _selectedIndex = 0;
 
   static List<SettingsComponent> settingsComponents = [
-    SettingsComponent(Icon(Icons.settings), 'General Settings', null),
-    SettingsComponent(Icon(Icons.account_circle), 'Account', null),
-    SettingsComponent(Icon(Icons.fingerprint), 'Password', null),
-    SettingsComponent(Icon(Icons.bug_report), 'Bug Report', null),
-    SettingsComponent(Icon(Icons.info), 'Information', null),
+    SettingsComponent(Icon(Icons.edit), 'Editor', Text('Editor')),
+    SettingsComponent(Icon(Icons.account_circle), 'Account', Text('Account')),
+    SettingsComponent(Icon(Icons.timeline), 'Version Control', Text('Version '
+        'Control')),
+    SettingsComponent(Icon(Icons.vpn_key), 'SSH Configurations', Text('SSH')),
+    SettingsComponent(Icon(Icons.fingerprint), 'Password', Text('Password')),
+    SettingsComponent(Icon(Icons.build), 'Build and Execution', Text('Build')),
+    SettingsComponent(Icon(Icons.bug_report), 'Bug Report', Text('Bug')),
+    SettingsComponent(Icon(Icons.info), 'Information', Text('Info')),
   ];
 
-  static List<Widget> settingsWidget = [
-    ListView(
-      children: <Widget>[
-        Text('General Settings'),
-
-      ],
-    )
-  ];
-
-  void onItemTap(int index) {
+  void onItemTap(int index, bool largeScreen) {
     setState(() {
-      selectedIndex = index;
+      if (largeScreen)
+        _selectedIndex = index;
+      else {
+        //TODO: change screen to sideWidget
+      }
     });
   }
 
@@ -45,10 +44,27 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        if (constraints.maxWidth < 600) {
+        if (constraints.maxWidth > 600) {
           return Row(
             children: <Widget>[
-              settingsWidget.elementAt(selectedIndex),
+              Expanded(
+                flex: 1,
+                child: ListView.separated(
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        leading: settingsComponents[index].icon,
+                        title: Text(settingsComponents[index].title),
+                        onTap: () {onItemTap(index, true);},
+                      );
+                    },
+                    separatorBuilder: (context, index) => const Divider(),
+                    itemCount: settingsComponents.length
+                ),
+              ),
+              Expanded(
+                flex: 3,
+                child: settingsComponents[_selectedIndex].sideWidget,
+              ),
             ],
           );
         } else {
@@ -58,7 +74,8 @@ class _SettingsPageState extends State<SettingsPage> {
             itemBuilder: (context, index) {
               return ListTile(
                   leading: settingsComponents[index].icon,
-                  title: Text(settingsComponents[index].title)
+                  title: Text(settingsComponents[index].title),
+                  onTap: () {onItemTap(index, false);},
               );
             },
             separatorBuilder: (context, index) => const Divider(),
