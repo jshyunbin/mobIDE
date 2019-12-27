@@ -54,6 +54,7 @@ class ProjectPage extends StatelessWidget {
               ],
             ),
             Divider(),
+            //TODO: Use datatable widget to show files
             Text('this is where the files should look'),
           ],
         ),
@@ -61,9 +62,7 @@ class ProjectPage extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.keyboard_arrow_left),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          onPressed: () => Navigator.pop(context),
         ),
         title: Text(projectContent.title),
         actions: <Widget>[

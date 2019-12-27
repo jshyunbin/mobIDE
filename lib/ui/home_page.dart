@@ -116,15 +116,12 @@ class HomePage extends StatelessWidget {
         'sit amet, consectetur adipiscing elit.', sshId: 'jhb-gram',
         initializedDate: '2019-12-24', modifiedDate: '2019-12-24',);
 
-    return ListView(
-      //TODO: replace the list.
-      children: <Widget>[
-        ProjectListItem(projectContent: projectContent,),
-      ProjectListItem(projectContent: projectContent,),
-      ProjectListItem(projectContent: projectContent,),
-      ProjectListItem(projectContent: projectContent,),
-      ProjectListItem(projectContent: projectContent,),
-      ],
+    return ListView.separated(
+      itemCount: 5,
+      itemBuilder: (context, index) {
+        return ProjectListItem(projectContent: projectContent,);
+      },
+      separatorBuilder: (context, index) => Divider(),
     );
   }
 }
