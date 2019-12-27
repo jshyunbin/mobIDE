@@ -18,6 +18,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   int _selectedIndex = 0;
 
+  //TODO: replace Text() widgets to side Widgets
   static List<SettingsComponent> settingsComponents = [
     SettingsComponent(Icon(Icons.edit), 'Editor', Text('Editor')),
     SettingsComponent(Icon(Icons.account_circle), 'Account', Text('Account')),
@@ -32,10 +33,21 @@ class _SettingsPageState extends State<SettingsPage> {
 
   void onItemTap(int index, bool largeScreen) {
     setState(() {
-      if (largeScreen)
-        _selectedIndex = index;
-      else {
-        //TODO: change screen to sideWidget
+      _selectedIndex = index;
+      if (!largeScreen) {
+        Navigator.push(context, MaterialPageRoute(builder: (context) =>
+        Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              icon: Icon(Icons.keyboard_arrow_left),
+              onPressed: () => Navigator.pop(context)
+            ),
+            title: Text(settingsComponents[_selectedIndex].title),
+            ),
+          body: settingsComponents[_selectedIndex].sideWidget,
+          ),
+        ),
+        );
       }
     });
   }
@@ -46,6 +58,7 @@ class _SettingsPageState extends State<SettingsPage> {
       builder: (context, constraints) {
         if (constraints.maxWidth > 600) {
           return Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Expanded(
                 flex: 1,
@@ -54,16 +67,20 @@ class _SettingsPageState extends State<SettingsPage> {
                       return ListTile(
                         leading: settingsComponents[index].icon,
                         title: Text(settingsComponents[index].title),
-                        onTap: () {onItemTap(index, true);},
+                        onTap: () => onItemTap(index, true),
                       );
                     },
                     separatorBuilder: (context, index) => const Divider(),
                     itemCount: settingsComponents.length
                 ),
               ),
+              VerticalDivider(),
               Expanded(
                 flex: 3,
-                child: settingsComponents[_selectedIndex].sideWidget,
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                  child: settingsComponents[_selectedIndex].sideWidget,
+                ),
               ),
             ],
           );
@@ -75,7 +92,7 @@ class _SettingsPageState extends State<SettingsPage> {
               return ListTile(
                   leading: settingsComponents[index].icon,
                   title: Text(settingsComponents[index].title),
-                  onTap: () {onItemTap(index, false);},
+                  onTap: () => onItemTap(index, false),
               );
             },
             separatorBuilder: (context, index) => const Divider(),
