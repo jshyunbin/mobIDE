@@ -26,14 +26,12 @@ class _MyHomePageState extends State<MyHomePage> {
   //TODO: replace the Text classes to each page widgets.
   static List<Widget> _pageWidgets = <Widget>[
     //TODO: set toDestination parameter
-    HomePage(
-      toDestination: null,
-    ),
+    HomePage(),
     Text('Index 1: SSH'),
     SettingsPage(),
   ];
 
-  void _FABPressed() {
+  void _fabPressed() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
       // changed in this State, which causes it to rerun the build method below
@@ -84,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: (_selectedIndex == 0)
           ? FloatingActionButton(
-              onPressed: _FABPressed,
+              onPressed: _fabPressed,
               tooltip: 'New Project',
               child: Icon(Icons.add),
             )
