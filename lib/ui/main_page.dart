@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:mobide/ui/home_page.dart';
 import 'package:mobide/ui/settings_page.dart';
@@ -25,12 +24,12 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
   //TODO: replace the Text classes to each page widgets.
-  static List<Widget> _pageWidgets = <Widget> [
+  static List<Widget> _pageWidgets = <Widget>[
     //TODO: set toDestination parameter
-    HomePage(toDestination: null,),
-    Text(
-      'Index 1: SSH'
+    HomePage(
+      toDestination: null,
     ),
+    Text('Index 1: SSH'),
     SettingsPage(),
   ];
 
@@ -83,11 +82,13 @@ class _MyHomePageState extends State<MyHomePage> {
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
       ),
-      floatingActionButton: (_selectedIndex==0)?FloatingActionButton(
-        onPressed: _FABPressed,
-        tooltip: 'New Project',
-        child: Icon(Icons.add),
-      ): null, // This trailing comma makes auto-formatting nicer for build
+      floatingActionButton: (_selectedIndex == 0)
+          ? FloatingActionButton(
+              onPressed: _FABPressed,
+              tooltip: 'New Project',
+              child: Icon(Icons.add),
+            )
+          : null, // This trailing comma makes auto-formatting nicer for build
       // methods.
     );
   }
