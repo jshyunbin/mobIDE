@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mobide/ui/theme/style.dart';
+import 'package:flutter/cupertino.dart';
 
 class SettingsComponent {
   SettingsComponent(this.icon, this.title, this.sideWidget);
@@ -20,10 +22,7 @@ class _SettingsPageState extends State<SettingsPage> {
   static List<SettingsComponent> settingsComponents = [
     SettingsComponent(Icon(Icons.edit), 'Editor', Text('Editor')),
     SettingsComponent(Icon(Icons.account_circle), 'Account', Text('Account')),
-    SettingsComponent(
-        Icon(Icons.timeline),
-        'Version Control',
-        Text('Version '
+    SettingsComponent(Icon(Icons.timeline), 'Version Control', Text('Version '
             'Control')),
     SettingsComponent(Icon(Icons.vpn_key), 'SSH Configurations', Text('SSH')),
     SettingsComponent(Icon(Icons.fingerprint), 'Password', Text('Password')),
@@ -54,11 +53,17 @@ class _SettingsPageState extends State<SettingsPage> {
     });
   }
 
+  void _searchChanged(String str) {
+    setState(() {
+      //TODO: change list when searched
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        if (constraints.maxWidth > 600) {
+        if (constraints.maxWidth < 600) {
           return Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -86,17 +91,69 @@ class _SettingsPageState extends State<SettingsPage> {
             ],
           );
         } else {
-          return ListView.separated(
-            padding: const EdgeInsets.fromLTRB(10, 30, 10, 10),
-            itemCount: settingsComponents.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                leading: settingsComponents[index].icon,
-                title: Text(settingsComponents[index].title),
-                onTap: () => onItemTap(index, false),
-              );
-            },
-            separatorBuilder: (context, index) => const Divider(),
+          return CustomScrollView(
+            slivers: <Widget>[
+              SliverAppBar(
+                expandedHeight: 125.0,
+                backgroundColor: Colors.white,
+                pinned: true,
+                floating: true,
+                snap: true,
+                title: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text('Settings', style: Type.header4.apply(color:
+                  Colors.black),),
+                ),
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Column(
+                    children: <Widget>[
+                      SizedBox(height: 90.0),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16.0, 6.0, 16.0, 16.0),
+                        child: Container(
+                          height: 36.0,
+                          width: double.infinity,
+                          child: CupertinoTextField(
+                            keyboardType: TextInputType.text,
+                            placeholder: 'Search for projects',
+                            placeholderStyle: Type.subtitle1.apply(color: Color
+                              (0xffC4C6CC),),
+                            prefix: Padding(
+                              padding:
+                              const EdgeInsets.fromLTRB(9.0, 6.0, 9.0, 6.0),
+                              child: Icon(
+                                Icons.search,
+                                color: Color(0xffC4C6CC),
+                              ),
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.0),
+                              color: Color(0xffF0F1F5),
+                            ),
+                            onChanged: _searchChanged,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                    (context, index) => Column(
+                      children: <Widget>[
+                        ListTile(
+                          leading: settingsComponents[index].icon,
+                          title: Text(settingsComponents[index].title),
+                          onTap: () => onItemTap(index, false),
+                        ),
+                        Divider()
+                      ],
+                    ),
+                  childCount: settingsComponents.length,
+                ),
+              )
+            ],
           );
         }
       },
