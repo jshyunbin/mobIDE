@@ -122,7 +122,8 @@ class _SettingsPageState extends State<SettingsPage> {
                           children: <Widget>[
                             ListTile(
                               leading: settingsComponents[index].icon,
-                              title: Text(settingsComponents[index].title),
+                              title: Text(settingsComponents[index].title, style: Type
+                                  .body1),
                               onTap: () => onItemTap(index, false),
                             ),
                             Divider()
@@ -198,7 +199,8 @@ class _SettingsPageState extends State<SettingsPage> {
                       children: <Widget>[
                         ListTile(
                           leading: settingsComponents[index].icon,
-                          title: Text(settingsComponents[index].title),
+                          title: Text(settingsComponents[index].title, style:
+                          Type.body1),
                           onTap: () => onItemTap(index, false),
                         ),
                         Divider()
