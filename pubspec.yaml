@@ -64,5 +64,6 @@ flutter:
         - asset: fonts/WorkSans-Medium.ttf
           weight: 500
         - asset: fonts/WorkSans-Regular.ttf
+          weight: 400
         - asset: fonts/WorkSans-SemiBold.ttf
           weight: 600
