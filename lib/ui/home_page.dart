@@ -98,11 +98,8 @@ class ProjectListItem extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    ProjectPage(
-                      projectContent: projectContent,
-                    )),
+            MaterialPageRoute(builder: (context) => ProjectPage(projectContent:
+            projectContent,)),
           );
         },
       ),
@@ -110,12 +107,17 @@ class ProjectListItem extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
-  HomePage({Key key, this.toDestination}) : super(key: key);
+class HomePage extends StatefulWidget {
+  HomePage({Key key}) : super(key: key);
 
-  final Object toDestination;
 
-  ProjectContent projectContent = ProjectContent(
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  final ProjectContent projectContent = ProjectContent(
     title: 'sample 0',
     description: 'Lorem ipsum dolor '
         'sit amet, consectetur adipiscing elit.',
@@ -123,6 +125,18 @@ class HomePage extends StatelessWidget {
     initializedDate: '2019-12-24',
     modifiedDate: '2019-12-24',
   );
+
+  void searchChanged(String str) {
+    setState(() {
+      //TODO: change list content when searched
+    });
+  }
+
+  void editPressed() {
+    setState(() {
+      //TODO: change list content when editing mode
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -139,6 +153,13 @@ class HomePage extends StatelessWidget {
             child: Text('Projects', style: Type.header4.apply(color: Colors
                 .black),),
           ),
+          actions: <Widget>[
+            FlatButton(
+              onPressed: editPressed,
+              child: Text('EDIT', style: Type.button.apply(color: Colors
+                  .black)),
+            ),
+          ],
           flexibleSpace: FlexibleSpaceBar(
             background: Column(
               children: <Widget>[
@@ -165,6 +186,7 @@ class HomePage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8.0),
                         color: Color(0xffF0F1F5),
                       ),
+                      onChanged: searchChanged,
                     ),
                   ),
                 ),
@@ -172,24 +194,14 @@ class HomePage extends StatelessWidget {
             ),
           ),
         ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-              (context, index) => Column(crossAxisAlignment:
-                CrossAxisAlignment.start, children: <Widget>[ProjectListItem
-                (projectContent: projectContent,), Divider()],),
+        SliverList(delegate: SliverChildBuilderDelegate((context, index) =>
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children:
+            <Widget>[ProjectListItem(projectContent: projectContent,), Divider()],),
             childCount: 7,
           ),
         )
       ],
     );
-//    return ListView.separated(
-//      itemCount: 5,
-//      itemBuilder: (context, index) {
-//        return ProjectListItem(
-//          projectContent: projectContent,
-//        );
-//      },
-//      separatorBuilder: (context, index) => Divider(),
-//    );
   }
+
 }
