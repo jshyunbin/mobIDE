@@ -19,7 +19,7 @@ class Type {
   static const TextStyle header4 = TextStyle(
     fontSize: 34,
     fontFamily: 'WorkSans',
-    fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.w600,
   );
   static const TextStyle header5 = TextStyle(
     fontSize: 24,
