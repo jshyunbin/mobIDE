@@ -1,3 +1,4 @@
+import 'package:path_provider/path_provider.dart';
 import 'package:ssh/ssh.dart';
 
 enum FileType { dir, bin, txt, unknown, etc }
@@ -15,10 +16,9 @@ class FileSystem {
 
   FileSystem(this._client);
 
-  void connect() async {}
-
   Future<List<_File>> getFiles([String path = '.']) async {
     await _client.connect();
+
     var s = '';
     await _client.execute('ls -a $path').then((v) {
       s = v;
@@ -45,8 +45,34 @@ class FileSystem {
       }
     }
 
-    print('-----------------------');
+    await _client.disconnect();
 
     return res;
+  }
+
+  Future<void> download(_File file) async {
+    final dir = await getApplicationDocumentsDirectory();
+
+    await _client.connectSFTP();
+    await _client.sftpDownload(
+        path: '${file.path}/${file.name}', toPath: '$dir${file.path}');
+    await _client.disconnectSFTP();
+  }
+
+  Future<void> cancelDownload() async {
+    await _client.sftpCancelDownload();
+  }
+
+  Future<void> upload(_File file) async {
+    final dir = await getApplicationDocumentsDirectory();
+
+    await _client.connectSFTP();
+    await _client.sftpUpload(
+        path: '$dir${file.path}/${file.name}', toPath: '${file.path}');
+    await _client.disconnectSFTP();
+  }
+
+  Future<void> cancelUpload() async {
+    await _client.sftpCancelUpload();
   }
 }
