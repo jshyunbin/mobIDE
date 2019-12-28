@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 
 class ProjectContent {
-
-  ProjectContent({this.title, this.description, this.sshId, this
-      .initializedDate, this.modifiedDate}) : super();
+  ProjectContent(
+      {this.title,
+      this.description,
+      this.sshId,
+      this.initializedDate,
+      this.modifiedDate})
+      : super();
 
   String title;
   String description;
@@ -13,7 +17,6 @@ class ProjectContent {
 }
 
 class ProjectPage extends StatelessWidget {
-
   const ProjectPage({Key key, this.projectContent}) : super(key: key);
 
   final ProjectContent projectContent;
@@ -27,28 +30,43 @@ class ProjectPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(projectContent.description, style: TextStyle(
-              fontSize: 20,
-            ),),
+            Text(
+              projectContent.description,
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Chip(
-                  label: Row(children: <Widget>[Text('SSH Connection '
-                      'Success'), Icon(Icons.check)
-                  ],),
+                  label: Row(
+                    children: <Widget>[
+                      Text('SSH Connection '
+                          'Success'),
+                      Icon(Icons.check)
+                    ],
+                  ),
                   backgroundColor: Color.fromARGB(100, 52, 235, 100),
                 ),
                 Chip(
-                  label: Row(children: <Widget>[Text('Git '
-                      'Success'), Icon(Icons.check)
-                  ],),
+                  label: Row(
+                    children: <Widget>[
+                      Text('Git '
+                          'Success'),
+                      Icon(Icons.check)
+                    ],
+                  ),
                   backgroundColor: Color.fromARGB(100, 52, 235, 100),
                 ),
                 Chip(
-                  label: Row(children: <Widget>[Text('SSH Connection '
-                      'Success'), Icon(Icons.check)
-                  ],),
+                  label: Row(
+                    children: <Widget>[
+                      Text('SSH Connection '
+                          'Success'),
+                      Icon(Icons.check)
+                    ],
+                  ),
                   backgroundColor: Color.fromARGB(100, 52, 235, 100),
                 )
               ],

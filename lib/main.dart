@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'ui/main_page.dart';
+import 'package:mobide/ui/main_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -20,7 +20,6 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.blue,
-
       ),
       home: MyHomePage(title: 'mobIDE Demo'),
     );

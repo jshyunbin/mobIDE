@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:mobide/ui/project_page.dart';
 
@@ -49,16 +48,16 @@ class _ProjectDescription extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               Text(
-                (projectContent.sshId == null)? 'local' : '${projectContent
-        .sshId}',
+                (projectContent.sshId == null)
+                    ? 'local'
+                    : '${projectContent.sshId}',
                 style: const TextStyle(
                   fontSize: 15.0,
                   color: Colors.black87,
                 ),
               ),
               Text(
-                '${projectContent.initializedDate} · ${projectContent
-        .modifiedDate} ★',
+                '${projectContent.initializedDate} · ${projectContent.modifiedDate} ★',
                 style: const TextStyle(
                   fontSize: 15.0,
                   color: Colors.black54,
@@ -95,31 +94,42 @@ class ProjectListItem extends StatelessWidget {
           ),
         ),
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) =>
-              ProjectPage(projectContent: projectContent,)),);
-          },
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    ProjectPage(
+                      projectContent: projectContent,
+                    )),
+          );
+        },
       ),
     );
   }
 }
 
 class HomePage extends StatelessWidget {
-  HomePage({Key key, this.toDestination}): super(key: key);
+  HomePage({Key key, this.toDestination}) : super(key: key);
 
   final Object toDestination;
 
-
   @override
   Widget build(BuildContext context) {
-
-    ProjectContent projectContent = ProjectContent(title: 'sample 0', description: 'Lorem ipsum dolor '
-        'sit amet, consectetur adipiscing elit.', sshId: 'jhb-gram',
-        initializedDate: '2019-12-24', modifiedDate: '2019-12-24',);
+    ProjectContent projectContent = ProjectContent(
+      title: 'sample 0',
+      description: 'Lorem ipsum dolor '
+          'sit amet, consectetur adipiscing elit.',
+      sshId: 'jhb-gram',
+      initializedDate: '2019-12-24',
+      modifiedDate: '2019-12-24',
+    );
 
     return ListView.separated(
       itemCount: 5,
       itemBuilder: (context, index) {
-        return ProjectListItem(projectContent: projectContent,);
+        return ProjectListItem(
+          projectContent: projectContent,
+        );
       },
       separatorBuilder: (context, index) => Divider(),
     );

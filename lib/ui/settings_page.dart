@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class SettingsComponent{
+class SettingsComponent {
   SettingsComponent(this.icon, this.title, this.sideWidget);
 
   final Icon icon;
@@ -8,22 +8,23 @@ class SettingsComponent{
   final Widget sideWidget;
 }
 
-class SettingsPage extends StatefulWidget{
+class SettingsPage extends StatefulWidget {
   @override
   _SettingsPageState createState() => _SettingsPageState();
-
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-
   int _selectedIndex = 0;
 
   //TODO: replace Text() widgets to side Widgets
   static List<SettingsComponent> settingsComponents = [
     SettingsComponent(Icon(Icons.edit), 'Editor', Text('Editor')),
     SettingsComponent(Icon(Icons.account_circle), 'Account', Text('Account')),
-    SettingsComponent(Icon(Icons.timeline), 'Version Control', Text('Version '
-        'Control')),
+    SettingsComponent(
+        Icon(Icons.timeline),
+        'Version Control',
+        Text('Version '
+            'Control')),
     SettingsComponent(Icon(Icons.vpn_key), 'SSH Configurations', Text('SSH')),
     SettingsComponent(Icon(Icons.fingerprint), 'Password', Text('Password')),
     SettingsComponent(Icon(Icons.build), 'Build and Execution', Text('Build')),
@@ -35,18 +36,19 @@ class _SettingsPageState extends State<SettingsPage> {
     setState(() {
       _selectedIndex = index;
       if (!largeScreen) {
-        Navigator.push(context, MaterialPageRoute(builder: (context) =>
-        Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-              icon: Icon(Icons.keyboard_arrow_left),
-              onPressed: () => Navigator.pop(context)
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Scaffold(
+              appBar: AppBar(
+                leading: IconButton(
+                    icon: Icon(Icons.keyboard_arrow_left),
+                    onPressed: () => Navigator.pop(context)),
+                title: Text(settingsComponents[_selectedIndex].title),
+              ),
+              body: settingsComponents[_selectedIndex].sideWidget,
             ),
-            title: Text(settingsComponents[_selectedIndex].title),
-            ),
-          body: settingsComponents[_selectedIndex].sideWidget,
           ),
-        ),
         );
       }
     });
@@ -71,8 +73,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       );
                     },
                     separatorBuilder: (context, index) => const Divider(),
-                    itemCount: settingsComponents.length
-                ),
+                    itemCount: settingsComponents.length),
               ),
               VerticalDivider(),
               Expanded(
@@ -90,9 +91,9 @@ class _SettingsPageState extends State<SettingsPage> {
             itemCount: settingsComponents.length,
             itemBuilder: (context, index) {
               return ListTile(
-                  leading: settingsComponents[index].icon,
-                  title: Text(settingsComponents[index].title),
-                  onTap: () => onItemTap(index, false),
+                leading: settingsComponents[index].icon,
+                title: Text(settingsComponents[index].title),
+                onTap: () => onItemTap(index, false),
               );
             },
             separatorBuilder: (context, index) => const Divider(),
