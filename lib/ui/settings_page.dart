@@ -1,6 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobide/ui/theme/style.dart';
-import 'package:flutter/cupertino.dart';
 
 class SettingsComponent {
   SettingsComponent(this.icon, this.title, this.sideWidget);
@@ -23,7 +23,7 @@ class _SettingsPageState extends State<SettingsPage> {
     SettingsComponent(Icon(Icons.edit), 'Editor', Text('Editor')),
     SettingsComponent(Icon(Icons.account_circle), 'Account', Text('Account')),
     SettingsComponent(Icon(Icons.timeline), 'Version Control', Text('Version '
-            'Control')),
+        'Control')),
     SettingsComponent(Icon(Icons.vpn_key), 'SSH Configurations', Text('SSH')),
     SettingsComponent(Icon(Icons.fingerprint), 'Password', Text('Password')),
     SettingsComponent(Icon(Icons.build), 'Build and Execution', Text('Build')),
@@ -37,7 +37,7 @@ class _SettingsPageState extends State<SettingsPage> {
       if (!largeScreen) {
         Navigator.push(
           context,
-          MaterialPageRoute(
+          CupertinoPageRoute(
             builder: (context) => Scaffold(
               appBar: AppBar(
                 leading: IconButton(
@@ -122,9 +122,10 @@ class _SettingsPageState extends State<SettingsPage> {
                           children: <Widget>[
                             ListTile(
                               leading: settingsComponents[index].icon,
-                              title: Text(settingsComponents[index].title, style: Type
+                              title: Text(
+                                  settingsComponents[index].title, style: Type
                                   .body1),
-                              onTap: () => onItemTap(index, false),
+                              onTap: () => onItemTap(index, true),
                             ),
                             Divider()
                           ],
@@ -195,17 +196,17 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               SliverList(
                 delegate: SliverChildBuilderDelegate(
-                    (context, index) => Column(
-                      children: <Widget>[
-                        ListTile(
-                          leading: settingsComponents[index].icon,
-                          title: Text(settingsComponents[index].title, style:
-                          Type.body1),
-                          onTap: () => onItemTap(index, false),
-                        ),
-                        Divider()
-                      ],
-                    ),
+                      (context, index) => Column(
+                    children: <Widget>[
+                      ListTile(
+                        leading: settingsComponents[index].icon,
+                        title: Text(settingsComponents[index].title, style:
+                        Type.body1),
+                        onTap: () => onItemTap(index, false),
+                      ),
+                      Divider()
+                    ],
+                  ),
                   childCount: settingsComponents.length,
                 ),
               )
