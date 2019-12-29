@@ -1,14 +1,36 @@
+import 'dart:io';
+
+import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:ssh/ssh.dart';
 
 enum FileType { dir, bin, txt, unknown, etc }
 
-class _File {
+class SSHFile {
   String name;
   FileType type;
   String path;
+  String sshHost, sshId;
 
-  _File(this.name, this.type, this.path);
+  SSHFile(this.name, this.type, this.path, this.sshHost, this.sshId);
+
+  Future<String> openRead() async {
+    var dir = await getApplicationDocumentsDirectory();
+    var filePath = p.join(dir.path, sshHost, sshId, path, name);
+    if (FileSystemEntity.typeSync(filePath) == FileSystemEntityType.notFound) {
+      throw 'File Not Found!';
+    }
+    return File(filePath).readAsStringSync();
+  }
+
+  Future<void> write(String contents) async {
+    var dir = await getApplicationDocumentsDirectory();
+    var filePath = p.join(dir.path, sshHost, sshId, path, name);
+    if (FileSystemEntity.typeSync(filePath) == FileSystemEntityType.notFound) {
+      throw 'File Not Found!';
+    }
+    File(filePath).writeAsStringSync(contents);
+  }
 }
 
 class FileSystem {
@@ -16,7 +38,7 @@ class FileSystem {
 
   FileSystem(this._client);
 
-  Future<List<_File>> getFiles([String path = '.']) async {
+  Future<List<SSHFile>> getFiles([String path = '.']) async {
     await _client.connect();
 
     var s = '';
@@ -24,7 +46,7 @@ class FileSystem {
       s = v;
     });
     var l = s.split('\n').where((a) => a != '.' && a != '..' && a != '');
-    List<_File> res = [];
+    List<SSHFile> res = [];
 
     for (var i in l) {
       var fileType = '';
@@ -37,11 +59,11 @@ class FileSystem {
         s = v;
       });
       if (fileType.contains('inode')) {
-        res.add(_File(i, FileType.dir, s));
+        res.add(SSHFile(i, FileType.dir, s, _client.host, _client.id));
       } else if (fileType.contains('text')) {
-        res.add(_File(i, FileType.txt, s));
+        res.add(SSHFile(i, FileType.txt, s, _client.host, _client.id));
       } else {
-        res.add(_File(i, FileType.bin, s));
+        res.add(SSHFile(i, FileType.bin, s, _client.host, _client.id));
       }
     }
 
@@ -50,12 +72,15 @@ class FileSystem {
     return res;
   }
 
-  Future<void> download(_File file) async {
+  Future<void> download(SSHFile file, {Function callback}) async {
+    if (file.type == FileType.dir) return;
     final dir = await getApplicationDocumentsDirectory();
 
     await _client.connectSFTP();
     await _client.sftpDownload(
-        path: '${file.path}/${file.name}', toPath: '$dir${file.path}');
+        path: p.join(file.path, file.name),
+        toPath: p.join(dir.path, file.sshHost, file.sshId, file.path),
+        callback: callback);
     await _client.disconnectSFTP();
   }
 
@@ -63,12 +88,20 @@ class FileSystem {
     await _client.sftpCancelDownload();
   }
 
-  Future<void> upload(_File file) async {
+  Future<void> upload(SSHFile file, {Function callback}) async {
     final dir = await getApplicationDocumentsDirectory();
 
     await _client.connectSFTP();
-    await _client.sftpUpload(
-        path: '$dir${file.path}/${file.name}', toPath: '${file.path}');
+
+    if (file.type == FileType.dir) {
+      await _client.sftpMkdir(file.path);
+    } else {
+      await _client.sftpUpload(
+          path:
+              p.join(dir.path, file.sshHost, file.sshId, file.path, file.name),
+          toPath: file.path,
+          callback: callback);
+    }
     await _client.disconnectSFTP();
   }
 
