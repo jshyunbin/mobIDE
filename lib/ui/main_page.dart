@@ -37,16 +37,32 @@ class _MyHomePageState extends State<MyHomePage> {
       showDialog(
         context: context,
         builder: (_) => AlertDialog(
-            title: Text(
-              'Add Project',
-              style: Type.header5,
+          title: Text(
+            'Add Project',
+            style: Type.header5,
+          ),
+          content: Text(
+            'Contents',
+            style: Type.body1,
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text(
+                'CANCLE',
+                style: Type.button,
+              ),
+              onPressed: () => Navigator.of(context).pop(),
             ),
-            content: Column(
-              children: <Widget>[
-                TextField(),
-              ],
-            )),
-        barrierDismissible: true,
+            FlatButton(
+              child: Text(
+                'CREATE',
+                style: Type.button,
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+            )
+          ],
+        ),
+        barrierDismissible: false,
       );
     });
   }
