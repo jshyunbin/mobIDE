@@ -1,7 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobide/ui/project_page.dart';
 import 'package:mobide/ui/theme/style.dart';
-import 'package:flutter/cupertino.dart';
 
 class _ProjectDescription extends StatelessWidget {
   _ProjectDescription({
@@ -98,8 +98,10 @@ class ProjectListItem extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => ProjectPage(projectContent:
-            projectContent,)),
+            CupertinoPageRoute(
+                builder: (context) => ProjectPage(
+                      projectContent: projectContent,
+                    )),
           );
         },
       ),
@@ -197,8 +199,8 @@ class _HomePageState extends State<HomePage> {
         SliverList(delegate: SliverChildBuilderDelegate((context, index) =>
             Column(crossAxisAlignment: CrossAxisAlignment.start, children:
             <Widget>[ProjectListItem(projectContent: projectContent,), Divider()],),
-            childCount: 7,
-          ),
+          childCount: 7,
+        ),
         )
       ],
     );

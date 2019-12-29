@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobide/ui/home_page.dart';
 import 'package:mobide/ui/settings_page.dart';
+import 'package:mobide/ui/theme/style.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -33,12 +34,36 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _fabPressed() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      //TODO: set fab press callback function.
+      showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: Text(
+            'Add Project',
+            style: Type.header5,
+          ),
+          content: Text(
+            'Contents',
+            style: Type.body1,
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text(
+                'CANCLE',
+                style: Type.button,
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            FlatButton(
+              child: Text(
+                'CREATE',
+                style: Type.button,
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+            )
+          ],
+        ),
+        barrierDismissible: false,
+      );
     });
   }
 
