@@ -14,7 +14,7 @@ class SSHFile {
 
   SSHFile(this.name, this.type, this.path, this.sshHost, this.sshId);
 
-  Future<String> openRead() async {
+  Future<String> read() async {
     var dir = await getApplicationDocumentsDirectory();
     var filePath = p.join(dir.path, sshHost, sshId, path, name);
     if (FileSystemEntity.typeSync(filePath) == FileSystemEntityType.notFound) {
