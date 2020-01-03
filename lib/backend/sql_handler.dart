@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -24,21 +25,22 @@ class Project implements DataType {
 
   Project(
       {this.id,
-      this.name,
-      this.description,
-      this.initDate,
-      this.modDate,
-      this.localDir,
-      this.sshName});
+      @required this.name,
+      @required this.description,
+      @required this.initDate,
+      @required this.modDate,
+      @required this.localDir,
+      @required this.sshName});
 
   Project.fromMap(Map<String, dynamic> map)
       : this(
-            id: map['id'],
-            name: map['name'],
-            description: map['description'],
-            initDate: map['initDate'],
-            localDir: map['localDir'],
-            sshName: map['sshName']);
+      id: map['id'],
+      name: map['name'],
+      description: map['description'],
+      initDate: map['initDate'],
+      modDate: map['modDate'],
+      localDir: map['localDir'],
+      sshName: map['sshName']);
 
   Map<String, dynamic> toMap() {
     return {
@@ -61,7 +63,12 @@ class SSH implements DataType {
   final String username;
   final String password;
 
-  SSH({this.id, this.name, this.host, this.port, this.username, this.password});
+  SSH({this.id,
+    @required this.name,
+    @required this.host,
+    @required this.port,
+    @required this.username,
+    @required this.password});
 
   SSH.fromMap(Map<String, dynamic> map)
       : this(
@@ -89,7 +96,7 @@ class Setting implements DataType {
   final String key;
   final String value;
 
-  Setting({this.id, this.key, this.value});
+  Setting({this.id, @required this.key, @required this.value});
 
   Setting.fromMap(Map<String, dynamic> map)
       : this(id: map['id'], key: map['key'], value: map['value']);
