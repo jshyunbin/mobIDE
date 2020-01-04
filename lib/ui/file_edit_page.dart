@@ -16,9 +16,12 @@ class FileEditPage extends StatelessWidget {
             pinned: true,
             floating: true,
             snap: true,
-            leading: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: Colors.black,
+              ),
+              onPressed: () => Navigator.pop(context),
             ),
             title: Text(
               'test.cpp',
