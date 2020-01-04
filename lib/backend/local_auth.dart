@@ -41,3 +41,5 @@ class LocalAuth {
     _localAuth.stopAuthentication();
   }
 }
+
+final auth = LocalAuth();
