@@ -1,12 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mobide/ui/file_edit_page.dart';
 
 class ProjectContent {
-  ProjectContent(
-      {this.title,
-      this.description,
-      this.sshId,
-      this.initializedDate,
-      this.modifiedDate})
+  ProjectContent({this.title,
+    this.description,
+    this.sshId,
+    this.initializedDate,
+    this.modifiedDate})
       : super();
 
   String title;
@@ -28,7 +29,7 @@ class ProjectPage extends StatelessWidget {
       body: Container(
         padding: const EdgeInsets.all(20),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Text(
               projectContent.description,
@@ -74,6 +75,26 @@ class ProjectPage extends StatelessWidget {
             Divider(),
             //TODO: Use datatable widget to show files
             Text('this is where the files should look'),
+            DataTable(
+              columns: [
+                DataColumn(label: Icon(Icons.check_box_outline_blank)),
+                DataColumn(label: Text('File')),
+                DataColumn(label: Text('Status'))
+              ],
+              rows: [
+                DataRow(cells: [
+                  DataCell(Icon(Icons.code)),
+                  DataCell(Text('test.cpp'), onTap: () {
+                    Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) => FileEditPage(),
+                        ));
+                  }),
+                  DataCell(Icon(Icons.check)),
+                ]),
+              ],
+            ),
           ],
         ),
       ),
