@@ -9,7 +9,7 @@ class PieceTableWrap {
 
   int get length => _table.length;
 
-  int get cursor => cursor;
+  int get cursor => _table.cursor;
 
   PieceTableWrap(this._file);
 
