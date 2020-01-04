@@ -27,6 +27,7 @@ dependencies:
   path_provider: ^0.4.1
   piece_table: ^1.0.2
   path: ^1.6.4
+  local_auth: 0.6.1
 
 dev_dependencies:
   flutter_test:
