@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:ssh/ssh.dart';
@@ -34,9 +35,18 @@ class SSHFile {
 }
 
 class FileSystem {
-  SSHClient _client;
+  final SSHClient _client;
 
-  FileSystem(this._client);
+  FileSystem({
+    @required String host,
+    @required int port,
+    @required String username,
+    @required dynamic passwordOrKey,
+  }) : _client = SSHClient(
+            host: host,
+            port: port,
+            username: username,
+            passwordOrKey: passwordOrKey);
 
   Future<List<SSHFile>> getFiles([String path = '.']) async {
     await _client.connect();
