@@ -98,13 +98,6 @@ class FileEditPage extends StatelessWidget {
           )
         ],
       ),
-      bottomSheet: Container(
-        height: 30,
-        color: Colors.blueGrey,
-        child: Center(
-          child: Text('Terminal'),
-        ),
-      ),
       endDrawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
