@@ -3,14 +3,14 @@ import 'package:mobide/ui/theme/style.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class FileEditPage extends StatelessWidget {
-  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
 
-  BorderRadiusGeometry panelRadius = BorderRadius.only(
+  final BorderRadiusGeometry panelRadius = BorderRadius.only(
     topLeft: Radius.circular(24.0),
     topRight: Radius.circular(24.0),
   );
 
-  PanelController _pc = new PanelController();
+  final PanelController _pc = new PanelController();
 
   Widget _panel() {
     var terminalNum = 1;
@@ -44,7 +44,7 @@ class FileEditPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Container(
-                width: 30,
+                width: 35,
                 height: 5,
                 decoration: BoxDecoration(
                     color: Colors.grey[300],
@@ -83,7 +83,7 @@ class FileEditPage extends StatelessWidget {
     return CustomScrollView(
       slivers: <Widget>[
         SliverAppBar(
-          expandedHeight: 100.0,
+          expandedHeight: 90.0,
           backgroundColor: Colors.white,
           pinned: true,
           floating: true,
@@ -127,7 +127,10 @@ class FileEditPage extends StatelessWidget {
             background: Column(
               children: <Widget>[
                 SizedBox(
-                  height: 90,
+                  height: 105 - MediaQuery
+                      .of(context)
+                      .padding
+                      .top,
                 ),
                 Row(
                   children: <Widget>[
