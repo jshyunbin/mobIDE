@@ -15,7 +15,7 @@ class FileEditPage extends StatelessWidget {
 
   Widget _panel() {
     return Padding(
-      padding: EdgeInsets.fromLTRB(30.0, 12.0, 30.0, 0),
+      padding: EdgeInsets.fromLTRB(15.0, 12.0, 15.0, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -32,7 +32,7 @@ class FileEditPage extends StatelessWidget {
             ],
           ),
           SizedBox(
-            height: 24.0,
+            height: 20.0,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -46,7 +46,12 @@ class FileEditPage extends StatelessWidget {
               ),
             ],
           ),
-          TerminalPage(),
+          SizedBox(
+            height: 15.0,
+          ),
+          Expanded(
+            child: TerminalPage(),
+          ),
         ],
       ),
     );
