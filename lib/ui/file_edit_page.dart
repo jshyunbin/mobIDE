@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobide/ui/terminal.dart';
 import 'package:mobide/ui/theme/style.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -13,28 +14,6 @@ class FileEditPage extends StatelessWidget {
   final PanelController _pc = new PanelController();
 
   Widget _panel() {
-    var terminalNum = 1;
-
-    Widget _chip(
-      label,
-      int tabN,
-    ) {
-      return Chip(
-        avatar: CircleAvatar(
-          backgroundColor: Colors.grey.shade500,
-          child: Text(
-            tabN.toString(),
-            style: Type.header5,
-          ),
-        ),
-        label: label,
-        deleteIcon: Icon(Icons.close),
-        onDeleted: () {
-          terminalNum--;
-        },
-      );
-    }
-
     return Padding(
       padding: EdgeInsets.fromLTRB(30.0, 12.0, 30.0, 0),
       child: Column(
@@ -65,15 +44,9 @@ class FileEditPage extends StatelessWidget {
                   style: Type.header4.apply(color: Colors.black),
                 ),
               ),
-              for (var i = 0; i < terminalNum; i++)
-                _chip(
-                    Text(
-                      'local',
-                      style: Type.header6,
-                    ),
-                    1),
             ],
           ),
+          TerminalPage(),
         ],
       ),
     );
