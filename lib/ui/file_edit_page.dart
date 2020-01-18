@@ -59,6 +59,7 @@ class FileEditPage extends StatelessWidget {
 
   Widget _body(context) {
     return SafeArea(
+      bottom: false,
       child: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
@@ -81,31 +82,17 @@ class FileEditPage extends StatelessWidget {
             centerTitle: true,
             actions: <Widget>[
               IconButton(
-                  icon: Icon(
-                Icons.play_arrow,
-                color: Colors.green,
-              )),
-              IconButton(
                 icon: Icon(
                   Icons.attach_money,
                   color: Colors.green,
                 ),
                 onPressed: _pc.open,
               ),
-              IconButton(
-                icon: Icon(
-                  Icons.menu,
-                  color: Colors.black,
-                ),
-                onPressed: () {
-                  _scaffoldKey.currentState.openEndDrawer();
-                },
-              ),
             ],
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
-              (context, index) {
+                  (context, index) {
                 return DecoratedBox(
                   child: Text('This is the edit Text property.'),
                   decoration: BoxDecoration(color: Colors.amber),
@@ -132,56 +119,6 @@ class FileEditPage extends StatelessWidget {
             MediaQuery.of(context).padding.top,
         panel: _panel(),
         body: _body(context),
-      ),
-      endDrawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-                decoration: BoxDecoration(color: Colors.black12),
-                child: Text(
-                  'Drawer Header',
-                  style: Type.header5,
-                )),
-            ListTile(
-              leading: Icon(Icons.timeline),
-              title: Text('Git: master'),
-            ),
-            ListTile(
-              leading: Icon(Icons.call_received),
-              title: Text('Git pull'),
-            ),
-            ListTile(
-              leading: Icon(Icons.send),
-              title: Text('Git commit'),
-            ),
-            ListTile(
-              leading: Icon(Icons.call_made),
-              title: Text('Git push'),
-            ),
-
-            Divider(),
-            ListTile(
-              title: Text('Current Tabs'),
-            ),
-            ListTile(
-              leading: Icon(Icons.code),
-              title: Text('test.cpp'),
-              trailing: Icon(
-                Icons.close,
-                color: Colors.red,
-              ),
-            ),
-            ListTile(
-              leading: Icon(Icons.code),
-              title: Text('test2.cpp'),
-              trailing: Icon(
-                Icons.close,
-                color: Colors.red,
-              ),
-            )
-          ],
-        ),
       ),
     );
   }

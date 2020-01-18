@@ -142,71 +142,84 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: <Widget>[
-        SliverAppBar(
-          expandedHeight: 125.0,
-          backgroundColor: Colors.white,
-          pinned: true,
-          floating: true,
-          snap: true,
-          title: Padding(
-            padding: EdgeInsets.all(10),
-            child: Text('Projects', style: Type.header4.apply(color: Colors
-                .black),),
-          ),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.add,
-                color: Colors.black,
+    return SafeArea(
+      bottom: false,
+      child: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            expandedHeight: 125.0,
+            backgroundColor: Colors.white,
+            pinned: true,
+            floating: true,
+            snap: true,
+            title: Padding(
+              padding: EdgeInsets.all(10),
+              child: Text(
+                'Projects',
+                style: Type.header4.apply(color: Colors.black),
               ),
-              onPressed: editPressed,
             ),
-            SizedBox(width: 10),
-          ],
-          flexibleSpace: FlexibleSpaceBar(
-            background: Column(
-              children: <Widget>[
-                SizedBox(height: 90.0),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16.0, 6.0, 16.0, 16.0),
-                  child: Container(
-                    height: 36.0,
-                    width: double.infinity,
-                    child: CupertinoTextField(
-                      keyboardType: TextInputType.text,
-                      placeholder: 'Search for projects',
-                      placeholderStyle: Type.subtitle1.apply(color: Color
-                        (0xffC4C6CC),),
-                      prefix: Padding(
-                        padding:
-                        const EdgeInsets.fromLTRB(9.0, 6.0, 9.0, 6.0),
-                        child: Icon(
-                          Icons.search,
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(
+                  Icons.add,
+                  color: Colors.black,
+                ),
+                onPressed: editPressed,
+              ),
+              SizedBox(width: 10),
+            ],
+            flexibleSpace: FlexibleSpaceBar(
+              background: Column(
+                children: <Widget>[
+                  SizedBox(height: 60.0),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16.0, 6.0, 16.0, 16.0),
+                    child: Container(
+                      height: 36.0,
+                      width: double.infinity,
+                      child: CupertinoTextField(
+                        keyboardType: TextInputType.text,
+                        placeholder: 'Search for projects',
+                        placeholderStyle: Type.subtitle1.apply(
                           color: Color(0xffC4C6CC),
                         ),
+                        prefix: Padding(
+                          padding:
+                              const EdgeInsets.fromLTRB(9.0, 6.0, 9.0, 6.0),
+                          child: Icon(
+                            Icons.search,
+                            color: Color(0xffC4C6CC),
+                          ),
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
+                          color: Color(0xffF0F1F5),
+                        ),
+                        onChanged: searchChanged,
                       ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                        color: Color(0xffF0F1F5),
-                      ),
-                      onChanged: searchChanged,
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-        SliverList(delegate: SliverChildBuilderDelegate((context, index) =>
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children:
-            <Widget>[ProjectListItem(projectContent: projectContent,), Divider()],),
-          childCount: 7,
-        ),
-        )
-      ],
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  ProjectListItem(
+                    projectContent: projectContent,
+                  ),
+                  Divider()
+                ],
+              ),
+              childCount: 7,
+            ),
+          )
+        ],
+      ),
     );
   }
-
 }

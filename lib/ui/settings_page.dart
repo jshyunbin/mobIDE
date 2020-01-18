@@ -147,70 +147,77 @@ class _SettingsPageState extends State<SettingsPage> {
             ],
           );
         } else {
-          return CustomScrollView(
-            slivers: <Widget>[
-              SliverAppBar(
-                expandedHeight: 125.0,
-                backgroundColor: Colors.white,
-                pinned: true,
-                floating: true,
-                snap: true,
-                title: Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Text('Settings', style: Type.header4.apply(color:
-                  Colors.black),),
-                ),
-                flexibleSpace: FlexibleSpaceBar(
-                  background: Column(
-                    children: <Widget>[
-                      SizedBox(height: 90.0),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(16.0, 6.0, 16.0, 16.0),
-                        child: Container(
-                          height: 36.0,
-                          width: double.infinity,
-                          child: CupertinoTextField(
-                            keyboardType: TextInputType.text,
-                            placeholder: 'Search for projects',
-                            placeholderStyle: Type.subtitle1.apply(color: Color
-                              (0xffC4C6CC),),
-                            prefix: Padding(
-                              padding:
-                              const EdgeInsets.fromLTRB(9.0, 6.0, 9.0, 6.0),
-                              child: Icon(
-                                Icons.search,
+          return SafeArea(
+            bottom: false,
+            child: CustomScrollView(
+              slivers: <Widget>[
+                SliverAppBar(
+                  expandedHeight: 125.0,
+                  backgroundColor: Colors.white,
+                  pinned: true,
+                  floating: true,
+                  snap: true,
+                  title: Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Text(
+                      'Settings',
+                      style: Type.header4.apply(color: Colors.black),
+                    ),
+                  ),
+                  flexibleSpace: FlexibleSpaceBar(
+                    background: Column(
+                      children: <Widget>[
+                        SizedBox(height: 60.0),
+                        Padding(
+                          padding:
+                              const EdgeInsets.fromLTRB(16.0, 6.0, 16.0, 16.0),
+                          child: Container(
+                            height: 36.0,
+                            width: double.infinity,
+                            child: CupertinoTextField(
+                              keyboardType: TextInputType.text,
+                              placeholder: 'Search for projects',
+                              placeholderStyle: Type.subtitle1.apply(
                                 color: Color(0xffC4C6CC),
                               ),
+                              prefix: Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                    9.0, 6.0, 9.0, 6.0),
+                                child: Icon(
+                                  Icons.search,
+                                  color: Color(0xffC4C6CC),
+                                ),
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.0),
+                                color: Color(0xffF0F1F5),
+                              ),
+                              onChanged: _searchChanged,
                             ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.0),
-                              color: Color(0xffF0F1F5),
-                            ),
-                            onChanged: _searchChanged,
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                      (context, index) => Column(
-                    children: <Widget>[
-                      ListTile(
-                        leading: settingsComponents[index].icon,
-                        title: Text(settingsComponents[index].title, style:
-                        Type.body1),
-                        onTap: () => onItemTap(index, false),
-                      ),
-                      Divider()
-                    ],
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) => Column(
+                      children: <Widget>[
+                        ListTile(
+                          leading: settingsComponents[index].icon,
+                          title: Text(settingsComponents[index].title,
+                              style: Type.body1),
+                          onTap: () => onItemTap(index, false),
+                        ),
+                        Divider()
+                      ],
+                    ),
+                    childCount: settingsComponents.length,
                   ),
-                  childCount: settingsComponents.length,
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           );
         }
       },
