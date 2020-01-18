@@ -156,11 +156,14 @@ class _HomePageState extends State<HomePage> {
                 .black),),
           ),
           actions: <Widget>[
-            FlatButton(
+            IconButton(
+              icon: Icon(
+                Icons.add,
+                color: Colors.black,
+              ),
               onPressed: editPressed,
-              child: Text('EDIT', style: Type.button.apply(color: Colors
-                  .black)),
             ),
+            SizedBox(width: 10),
           ],
           flexibleSpace: FlexibleSpaceBar(
             background: Column(

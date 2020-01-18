@@ -14,7 +14,7 @@ description: A flutter implementation of mobIDE app.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
   ssh: ^0.0.5
@@ -29,6 +29,7 @@ dependencies:
   path: ^1.6.4
   sqflite: ^1.2.0
   local_auth: 0.6.1
+  sliding_up_panel: ^0.3.6
 
 dev_dependencies:
   flutter_test:

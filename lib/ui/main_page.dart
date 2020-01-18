@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobide/ui/home_page.dart';
 import 'package:mobide/ui/settings_page.dart';
-import 'package:mobide/ui/theme/style.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -32,40 +31,6 @@ class _MyHomePageState extends State<MyHomePage> {
     SettingsPage(),
   ];
 
-  void _fabPressed() {
-    setState(() {
-      showDialog(
-        context: context,
-        builder: (_) => AlertDialog(
-          title: Text(
-            'Add Project',
-            style: Type.header5,
-          ),
-          content: Text(
-            'Contents',
-            style: Type.body1,
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text(
-                'CANCLE',
-                style: Type.button,
-              ),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-            FlatButton(
-              child: Text(
-                'CREATE',
-                style: Type.button,
-              ),
-              onPressed: () => Navigator.of(context).pop(),
-            )
-          ],
-        ),
-        barrierDismissible: false,
-      );
-    });
-  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -105,14 +70,6 @@ class _MyHomePageState extends State<MyHomePage> {
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
       ),
-      floatingActionButton: (_selectedIndex == 0)
-          ? FloatingActionButton(
-              onPressed: _fabPressed,
-              tooltip: 'New Project',
-              child: Icon(Icons.add),
-            )
-          : null, // This trailing comma makes auto-formatting nicer for build
-      // methods.
     );
   }
 }
