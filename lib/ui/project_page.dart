@@ -68,19 +68,30 @@ class ProjectPage extends StatelessWidget {
     );
   }
 
+  Widget _file(String name) {
+    return Row(
+      children: <Widget>[
+        Row(
+          children: <Widget>[Icon(Icons.code), Text(name, style: Type.body1)],
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: Icon(
-            Icons.arrow_back_ios,
-            color: Colors.black,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+            onPressed: () => Navigator.pop(context),
           ),
           title: Text(
             projectContent.title,
             style: Type.header4.apply(color: Colors.black),
           ),
           backgroundColor: Colors.white,
+          elevation: 0,
         ),
         body: Padding(
           padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0),
@@ -94,6 +105,7 @@ class ProjectPage extends StatelessWidget {
               SizedBox(
                 height: 20.0,
               ),
+              // Status
               LayoutBuilder(
                 builder: (context, constraint) {
                   if (constraint.maxWidth > 600) {
@@ -116,6 +128,24 @@ class ProjectPage extends StatelessWidget {
                 },
               ),
               SizedBox(height: 20.0),
+
+              // Files
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text('Files', style: Type.header5),
+                  FlatButton(
+                      onPressed: null,
+                      child: Row(
+                        children: <Widget>[
+                          Text('Sort By Type'),
+                          Icon(Icons.keyboard_arrow_down),
+                        ],
+                      )
+                  )
+                ],
+              )
+
             ],
           ),
         ));
