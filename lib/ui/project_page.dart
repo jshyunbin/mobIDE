@@ -68,13 +68,27 @@ class ProjectPage extends StatelessWidget {
     );
   }
 
-  Widget _file(String name) {
-    return Row(
-      children: <Widget>[
-        Row(
-          children: <Widget>[Icon(Icons.code), Text(name, style: Type.body1)],
+  Widget _file(String name, Function onTap) {
+    return InkWell(
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 5.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Icon(Icons.code),
+                SizedBox(width: 10.0),
+                Text(name, style: Type.header6.apply(color: Colors.white)),
+              ],
+            ),
+            Icon(Icons.keyboard_arrow_right, color: Colors.white),
+          ],
         ),
-      ],
+      ),
+      onTap: onTap,
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
     );
   }
 
@@ -141,107 +155,60 @@ class ProjectPage extends StatelessWidget {
                           Text('Sort By Type'),
                           Icon(Icons.keyboard_arrow_down),
                         ],
-                      )
-                  )
+                      ))
                 ],
-              )
+              ),
 
+              DecoratedBox(
+                  decoration: BoxDecoration(
+                      color: Colors.black38,
+                      borderRadius: BorderRadius.circular(12.0)),
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
+                    child: Column(
+                      children: <Widget>[
+                        _file('test.cpp', () {
+                          Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) => FileEditPage(),
+                              ));
+                        }),
+                        Divider(
+                          color: Colors.black87,
+                        ),
+                        _file('test.cpp', () {
+                          Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) => FileEditPage(),
+                              ));
+                        }),
+                        Divider(
+                          color: Colors.black87,
+                        ),
+                        _file('test.cpp', () {
+                          Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) => FileEditPage(),
+                              ));
+                        }),
+                        Divider(
+                          color: Colors.black87,
+                        ),
+                        _file('test.cpp', () {
+                          Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) => FileEditPage(),
+                              ));
+                        }),
+                      ],
+                    ),
+                  ))
             ],
           ),
         ));
-  }
-
-  Widget _temp(context) {
-    return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Text(
-              projectContent.description,
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Chip(
-                  label: Row(
-                    children: <Widget>[
-                      Text('SSH Connection '
-                          'Success'),
-                      Icon(Icons.check)
-                    ],
-                  ),
-                  backgroundColor: Color.fromARGB(100, 52, 235, 100),
-                ),
-                Chip(
-                  label: Row(
-                    children: <Widget>[
-                      Text('Git '
-                          'Success'),
-                      Icon(Icons.check)
-                    ],
-                  ),
-                  backgroundColor: Color.fromARGB(100, 52, 235, 100),
-                ),
-                Chip(
-                  label: Row(
-                    children: <Widget>[
-                      Text('SSH Connection '
-                          'Success'),
-                      Icon(Icons.check)
-                    ],
-                  ),
-                  backgroundColor: Color.fromARGB(100, 52, 235, 100),
-                )
-              ],
-            ),
-            Divider(),
-            //TODO: Use datatable widget to show files
-            Text('this is where the files should look'),
-            DataTable(
-              columns: [
-                DataColumn(label: Icon(Icons.check_box_outline_blank)),
-                DataColumn(label: Text('File')),
-                DataColumn(label: Text('Status'))
-              ],
-              rows: [
-                DataRow(cells: [
-                  DataCell(Icon(Icons.code)),
-                  DataCell(Text('test.cpp'), onTap: () {
-                    Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                          builder: (context) => FileEditPage(),
-                        ));
-                  }),
-                  DataCell(Icon(Icons.check)),
-                ]),
-              ],
-            ),
-          ],
-        ),
-      ),
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.keyboard_arrow_left),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Text(projectContent.title),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.edit),
-            onPressed: null,
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: null,
-      ),
-    );
   }
 }
