@@ -62,7 +62,7 @@ class FileEditPage extends StatelessWidget {
       child: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
-            expandedHeight: 90.0,
+            expandedHeight: 50.0,
             backgroundColor: Colors.white,
             pinned: true,
             floating: true,
@@ -102,31 +102,6 @@ class FileEditPage extends StatelessWidget {
                 },
               ),
             ],
-            flexibleSpace: FlexibleSpaceBar(
-              background: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: 60,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        'sample0',
-                        style: Type.body1,
-                      ),
-                      Icon(Icons.chevron_right),
-                      Text(
-                        'test.cpp',
-                        style: Type.body1,
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
