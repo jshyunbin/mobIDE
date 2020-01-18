@@ -1,9 +1,7 @@
 # mobIDE
 
-[![Build Status](https://img.shields.io/github/workflow/status/jshyunbin/mobIDE/Flutter%20CI)](https://github.com/jshyunbin/mobIDE/actions)
-[![License](https://img.shields.io/github/license/jshyunbin/mobIDE)](https://github.com/jshyunbin/mobIDE/blob/master/LICENSE)
-
-The 'mobIDE' app is an opensource mobile IDE that provides computer-like experience. Using SSH communication, the mobIDE
+The 'mobIDE' app is an open source mobile IDE that provides computer-like experience. Using SSH communication, the
+ mobIDE
  app fully integrates to the SSH server workspace. 
  
  Here are some lists of features we will be presenting.
