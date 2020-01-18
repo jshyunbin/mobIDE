@@ -1,6 +1,6 @@
 # mobIDE
 
-The 'mobIDE' app is an open source mobile IDE that provides computer-like experience. Using SSH communication, the
+The 'mobIDE' app is an open source mobile IDE that provides desktop experience. Using SSH communication, the
  mobIDE
  app fully integrates to the SSH server workspace. 
  
