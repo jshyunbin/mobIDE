@@ -24,7 +24,6 @@ class ProjectPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //TODO: add project page
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.all(20),

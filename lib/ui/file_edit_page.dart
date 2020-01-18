@@ -58,90 +58,89 @@ class FileEditPage extends StatelessWidget {
   }
 
   Widget _body(context) {
-    return CustomScrollView(
-      slivers: <Widget>[
-        SliverAppBar(
-          expandedHeight: 90.0,
-          backgroundColor: Colors.white,
-          pinned: true,
-          floating: true,
-          snap: true,
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
-            ),
-            onPressed: () => Navigator.pop(context),
-          ),
-          title: Text(
-            'test.cpp',
-            style: Type.header4.apply(color: Colors.black),
-          ),
-          centerTitle: true,
-          actions: <Widget>[
-            IconButton(
-                icon: Icon(
-              Icons.play_arrow,
-              color: Colors.green,
-            )),
-            IconButton(
+    return SafeArea(
+      child: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            expandedHeight: 90.0,
+            backgroundColor: Colors.white,
+            pinned: true,
+            floating: true,
+            snap: true,
+            leading: IconButton(
               icon: Icon(
-                Icons.attach_money,
-                color: Colors.green,
-              ),
-              onPressed: _pc.open,
-            ),
-            IconButton(
-              icon: Icon(
-                Icons.menu,
+                Icons.arrow_back_ios,
                 color: Colors.black,
               ),
-              onPressed: () {
-                _scaffoldKey.currentState.openEndDrawer();
-              },
+              onPressed: () => Navigator.pop(context),
             ),
-          ],
-          flexibleSpace: FlexibleSpaceBar(
-            background: Column(
-              children: <Widget>[
-                SizedBox(
-                  height: 105 - MediaQuery
-                      .of(context)
-                      .padding
-                      .top,
+            title: Text(
+              'test.cpp',
+              style: Type.header4.apply(color: Colors.black),
+            ),
+            centerTitle: true,
+            actions: <Widget>[
+              IconButton(
+                  icon: Icon(
+                Icons.play_arrow,
+                color: Colors.green,
+              )),
+              IconButton(
+                icon: Icon(
+                  Icons.attach_money,
+                  color: Colors.green,
                 ),
-                Row(
-                  children: <Widget>[
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Text(
-                      'sample0',
-                      style: Type.body1,
-                    ),
-                    Icon(Icons.chevron_right),
-                    Text(
-                      'test.cpp',
-                      style: Type.body1,
-                    ),
-                  ],
-                )
-              ],
+                onPressed: _pc.open,
+              ),
+              IconButton(
+                icon: Icon(
+                  Icons.menu,
+                  color: Colors.black,
+                ),
+                onPressed: () {
+                  _scaffoldKey.currentState.openEndDrawer();
+                },
+              ),
+            ],
+            flexibleSpace: FlexibleSpaceBar(
+              background: Column(
+                children: <Widget>[
+                  SizedBox(
+                    height: 60,
+                  ),
+                  Row(
+                    children: <Widget>[
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Text(
+                        'sample0',
+                        style: Type.body1,
+                      ),
+                      Icon(Icons.chevron_right),
+                      Text(
+                        'test.cpp',
+                        style: Type.body1,
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) {
-              return DecoratedBox(
-                child: Text('This is the edit Text property.'),
-                decoration: BoxDecoration(color: Colors.amber),
-              );
-            },
-            childCount: 100,
-          ),
-        )
-      ],
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                return DecoratedBox(
+                  child: Text('This is the edit Text property.'),
+                  decoration: BoxDecoration(color: Colors.amber),
+                );
+              },
+              childCount: 100,
+            ),
+          )
+        ],
+      ),
     );
   }
 
