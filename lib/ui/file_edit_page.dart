@@ -58,51 +58,30 @@ class FileEditPage extends StatelessWidget {
   }
 
   Widget _body(context) {
-    return SafeArea(
-      bottom: false,
-      child: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            expandedHeight: 50.0,
-            backgroundColor: Colors.white,
-            pinned: true,
-            floating: true,
-            snap: true,
-            leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios,
-                color: Colors.black,
-              ),
-              onPressed: () => Navigator.pop(context),
-            ),
-            title: Text(
-              'test.cpp',
-              style: Type.header4.apply(color: Colors.black),
-            ),
-            centerTitle: true,
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(
-                  Icons.attach_money,
-                  color: Colors.green,
-                ),
-                onPressed: _pc.open,
-              ),
-            ],
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Text(
+          'test.cpp',
+          style: Type.header4.apply(color: Colors.black),
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+          onPressed: () => Navigator.pop(context),
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.attach_money, color: Colors.green),
+            onPressed: _pc.open,
           ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                return DecoratedBox(
-                  child: Text('This is the edit Text property.'),
-                  decoration: BoxDecoration(color: Colors.amber),
-                );
-              },
-              childCount: 100,
-            ),
-          )
         ],
       ),
+      body: SizedBox(
+          height: 1000,
+          child: DecoratedBox(
+            decoration: BoxDecoration(color: Colors.amber),
+            child: Center(child: Text('editor property')),
+          )),
     );
   }
 
