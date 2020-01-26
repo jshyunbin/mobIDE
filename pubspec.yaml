@@ -30,6 +30,7 @@ dependencies:
   sqflite: ^1.2.0
   local_auth: 0.6.1
   sliding_up_panel: ^0.3.6
+  loading: ^1.0.2
 
 dev_dependencies:
   flutter_test:
@@ -72,3 +73,7 @@ flutter:
           weight: 400
         - asset: fonts/WorkSans-SemiBold.ttf
           weight: 600
+    - family: Menlo
+      fonts:
+        - asset: fonts/Menlo-Regular.ttf
+          weight: 400

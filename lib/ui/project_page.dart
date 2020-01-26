@@ -1,13 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobide/ui/file_edit_page.dart';
+import 'package:mobide/backend/file_system.dart';
+import 'package:mobide/ui/text_editor.dart';
 
 class ProjectContent {
-  ProjectContent({this.title,
-    this.description,
-    this.sshId,
-    this.initializedDate,
-    this.modifiedDate})
+  ProjectContent(
+      {this.title,
+      this.description,
+      this.sshId,
+      this.initializedDate,
+      this.modifiedDate})
       : super();
 
   String title;
@@ -87,7 +89,11 @@ class ProjectPage extends StatelessWidget {
                     Navigator.push(
                         context,
                         CupertinoPageRoute(
-                          builder: (context) => FileEditPage(),
+                          builder: (context) =>
+                              TextEditor.fromFile(
+                                  file: SSHFile(
+                                      'hello.txt', FileType.txt, 'a', 'a',
+                                      'a')),
                         ));
                   }),
                   DataCell(Icon(Icons.check)),

@@ -1,33 +1,51 @@
 PODS:
   - Flutter (1.0.0)
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
+  - local_auth (0.0.1):
+    - Flutter
   - NMSSH (2.3.1)
   - path_provider (0.0.1):
     - Flutter
+  - sqflite (0.0.1):
+    - Flutter
+    - FMDB (~> 2.7.2)
   - ssh (0.0.5):
     - Flutter
     - NMSSH
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
+  - local_auth (from `.symlinks/plugins/local_auth/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
+  - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - ssh (from `.symlinks/plugins/ssh/ios`)
 
 SPEC REPOS:
   trunk:
+    - FMDB
     - NMSSH
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  local_auth:
+    :path: ".symlinks/plugins/local_auth/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
+  sqflite:
+    :path: ".symlinks/plugins/sqflite/ios"
   ssh:
     :path: ".symlinks/plugins/ssh/ios"
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  local_auth: 2571c49920ae469f46d5557435fad8fa473a5e88
   NMSSH: cd689ae535a1581a6dd9fd4600ff71247df510a6
   path_provider: f96fff6166a8867510d2c25fdcc346327cc4b259
+  sqflite: 4001a31ff81d210346b500c55b17f4d6c7589dd0
   ssh: 19c124ab36628047d2430e07cfade1de86992457
 
 PODFILE CHECKSUM: 1b66dae606f75376c5f2135a8290850eeb09ae83
