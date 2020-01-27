@@ -82,14 +82,19 @@ class ProjectPage extends StatelessWidget {
             ),
             SliverPadding(
               padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-              sliver: SliverGrid.count(
-                crossAxisSpacing: 20.0,
-                mainAxisSpacing: 20.0,
-                crossAxisCount: (media.size.width > 600) ? 2 : 1,
-                children: <Widget>[
-                  ProcessCard('SSH', null, true),
-                  ProcessCard('Git', null, true),
-                ],
+              sliver: SliverGrid(
+                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                  crossAxisSpacing: 20.0,
+                  mainAxisSpacing: 20.0,
+                  maxCrossAxisExtent: 600,
+                  childAspectRatio: 4.0,
+                ),
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    return ProcessCard('ssh', null, true);
+                  },
+                  childCount: 3,
+                ),
               ),
             ),
 
