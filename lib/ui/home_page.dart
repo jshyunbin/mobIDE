@@ -134,10 +134,8 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void editPressed() {
-    setState(() {
-      //TODO: change list content when editing mode
-    });
+  void _addPressed() {
+    setState(() {});
   }
 
   @override
@@ -165,7 +163,7 @@ class _HomePageState extends State<HomePage> {
                   Icons.add,
                   color: Colors.black,
                 ),
-                onPressed: editPressed,
+                onPressed: _addPressed,
               ),
               SizedBox(width: 10),
             ],
@@ -217,7 +215,7 @@ class _HomePageState extends State<HomePage> {
               ),
               childCount: 7,
             ),
-          )
+          ),
         ],
       ),
     );
