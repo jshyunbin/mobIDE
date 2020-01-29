@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:mobide/ui/file_edit_page.dart';
 import 'package:mobide/ui/theme/style.dart';
 
+import 'components/process_card.dart';
+
 class ProjectContent {
-  ProjectContent({this.title,
-    this.description,
-    this.sshId,
-    this.initializedDate,
-    this.modifiedDate})
+  ProjectContent(
+      {this.title,
+      this.description,
+      this.sshId,
+      this.initializedDate,
+      this.modifiedDate})
       : super();
 
   String title;
@@ -19,54 +22,9 @@ class ProjectContent {
 }
 
 class ProjectPage extends StatelessWidget {
-  const ProjectPage({Key key, this.projectContent}) : super(key: key);
+  ProjectPage({Key key, this.projectContent}) : super(key: key);
 
   final ProjectContent projectContent;
-
-  //TODO: make processCard an independent class
-  Widget processCard(String title) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.0),
-        color: Colors.black54,
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  title,
-                  style: Type.header5.apply(color: Colors.white),
-                ),
-                Icon(
-                  Icons.keyboard_arrow_up,
-                  color: Colors.white,
-                ),
-              ],
-            ),
-            SizedBox(height: 15.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Icon(
-                  Icons.check_circle,
-                  color: Colors.green,
-                  size: 40,
-                ),
-                SizedBox(width: 10.0),
-                Text('Connected',
-                    style: Type.header6.apply(color: Colors.white))
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 
   Widget _file(String name, Function onTap) {
     return InkWell(
@@ -94,6 +52,8 @@ class ProjectPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final MediaQueryData media = MediaQuery.of(context);
+
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -107,108 +67,110 @@ class ProjectPage extends StatelessWidget {
           backgroundColor: Colors.white,
           elevation: 0,
         ),
-        body: Padding(
-          padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                projectContent.description,
-                style: Type.body1,
+        body: CustomScrollView(
+          slivers: <Widget>[
+            SliverPadding(
+              padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0),
+              sliver: SliverList(
+                delegate: SliverChildListDelegate(
+                  [
+                    Text(projectContent.description, style: Type.body1),
+                    SizedBox(height: 20.0),
+                  ],
+                ),
               ),
-              SizedBox(
-                height: 20.0,
+            ),
+            SliverPadding(
+              padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+              sliver: SliverGrid(
+                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                  crossAxisSpacing: 20.0,
+                  mainAxisSpacing: 20.0,
+                  maxCrossAxisExtent: 600,
+                  childAspectRatio: 3.0,
+                ),
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    return ProcessCard('ssh', null, true);
+                  },
+                  childCount: 3,
+                ),
               ),
-              // Status
-              LayoutBuilder(
-                builder: (context, constraint) {
-                  if (constraint.maxWidth > 600) {
-                    return Row(
-                      children: <Widget>[
-                        Expanded(child: processCard('SSH')),
-                        SizedBox(width: 20.0),
-                        Expanded(child: processCard('Git')),
-                      ],
-                    );
-                  } else {
-                    return Column(
-                      children: <Widget>[
-                        processCard('SSH'),
-                        SizedBox(height: 20.0),
-                        processCard('Git'),
-                      ],
-                    );
-                  }
-                },
-              ),
-              SizedBox(height: 20.0),
+            ),
 
-              // Files
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text('Files', style: Type.header5),
-                  FlatButton(
-                      onPressed: null,
-                      child: Row(
-                        children: <Widget>[
-                          Text('Sort By Type'),
-                          Icon(Icons.keyboard_arrow_down),
-                        ],
+            // Files
+            SliverPadding(
+              padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+              sliver: SliverList(
+                delegate: SliverChildListDelegate([
+                  SizedBox(height: 20.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text('Files', style: Type.header5),
+                      FlatButton(
+                          onPressed: null,
+                          child: Row(
+                            children: <Widget>[
+                              Text('Sort By Type'),
+                              Icon(Icons.keyboard_arrow_down),
+                            ],
+                          ))
+                    ],
+                  ),
+                  DecoratedBox(
+                      decoration: BoxDecoration(
+                          color: Colors.black38,
+                          borderRadius: BorderRadius.circular(12.0)),
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
+                        child: Column(
+                          children: <Widget>[
+                            _file('test.cpp', () {
+                              Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder: (context) => FileEditPage(),
+                                  ));
+                            }),
+                            Divider(
+                              color: Colors.black87,
+                            ),
+                            _file('test.cpp', () {
+                              Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder: (context) => FileEditPage(),
+                                  ));
+                            }),
+                            Divider(
+                              color: Colors.black87,
+                            ),
+                            _file('test.cpp', () {
+                              Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder: (context) => FileEditPage(),
+                                  ));
+                            }),
+                            Divider(
+                              color: Colors.black87,
+                            ),
+                            _file('test.cpp', () {
+                              Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder: (context) => FileEditPage(),
+                                  ));
+                            }),
+                          ],
+                        ),
                       ))
-                ],
+                ]),
               ),
-
-              DecoratedBox(
-                  decoration: BoxDecoration(
-                      color: Colors.black38,
-                      borderRadius: BorderRadius.circular(12.0)),
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
-                    child: Column(
-                      children: <Widget>[
-                        _file('test.cpp', () {
-                          Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                builder: (context) => FileEditPage(),
-                              ));
-                        }),
-                        Divider(
-                          color: Colors.black87,
-                        ),
-                        _file('test.cpp', () {
-                          Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                builder: (context) => FileEditPage(),
-                              ));
-                        }),
-                        Divider(
-                          color: Colors.black87,
-                        ),
-                        _file('test.cpp', () {
-                          Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                builder: (context) => FileEditPage(),
-                              ));
-                        }),
-                        Divider(
-                          color: Colors.black87,
-                        ),
-                        _file('test.cpp', () {
-                          Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                builder: (context) => FileEditPage(),
-                              ));
-                        }),
-                      ],
-                    ),
-                  ))
-            ],
-          ),
-        ));
+            ),
+          ],
+        )
+    );
   }
 }
