@@ -19,48 +19,100 @@ class _ProcessCardState extends State<ProcessCard> {
 
   int status = 1;
 
+  void _onTap() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.0),
-        color: Colors.black54,
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  widget.name,
-                  style: Type.header5.apply(color: Colors.white),
-                ),
-                Icon(
-                  Icons.keyboard_arrow_up,
-                  color: Colors.white,
-                ),
-              ],
-            ),
-            SizedBox(height: 15.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Icon(
-                  Icons.check_circle,
-                  color: Colors.green,
-                  size: 40,
-                ),
-                SizedBox(width: 10.0),
-                Text('Connected',
-                    style: Type.header6.apply(color: Colors.white))
-              ],
-            ),
-          ],
+    return InkWell(
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12.0),
+          color: Colors.black54,
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    widget.name,
+                    style: Type.header5.apply(color: Colors.white),
+                  ),
+                  Icon(
+                    Icons.keyboard_arrow_up,
+                    color: Colors.white,
+                  ),
+                ],
+              ),
+              SizedBox(height: 15.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Icon(
+                    Icons.check_circle,
+                    color: Colors.green,
+                    size: 40,
+                  ),
+                  SizedBox(width: 10.0),
+                  Text('Connected',
+                      style: Type.header6.apply(color: Colors.white))
+                ],
+              ),
+            ],
+          ),
         ),
       ),
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      onTap: _onTap,
     );
   }
+}
+
+Widget addProcessCard() {
+  return DecoratedBox(
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(12.0),
+      color: Colors.transparent,
+    ),
+    child: Padding(
+      padding: EdgeInsets.all(20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                'Add Action',
+                style: Type.header5.apply(color: Colors.white),
+              ),
+              Icon(
+                Icons.keyboard_arrow_up,
+                color: Colors.white,
+              ),
+            ],
+          ),
+          SizedBox(height: 15.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Icon(
+                Icons.check_circle,
+                color: Colors.green,
+                size: 40,
+              ),
+              SizedBox(width: 10.0),
+              Text('Connected', style: Type.header6.apply(color: Colors.white))
+            ],
+          ),
+        ],
+      ),
+    ),
+  );
 }

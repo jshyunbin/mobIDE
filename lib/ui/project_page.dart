@@ -86,7 +86,7 @@ class ProjectPage extends StatelessWidget {
                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                   crossAxisSpacing: 20.0,
                   mainAxisSpacing: 20.0,
-                  maxCrossAxisExtent: 600,
+                  maxCrossAxisExtent: 400,
                   childAspectRatio: 3.0,
                 ),
                 delegate: SliverChildBuilderDelegate(
