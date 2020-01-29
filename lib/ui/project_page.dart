@@ -86,12 +86,14 @@ class ProjectPage extends StatelessWidget {
                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                   crossAxisSpacing: 20.0,
                   mainAxisSpacing: 20.0,
-                  maxCrossAxisExtent: 400,
-                  childAspectRatio: 3.0,
+                  maxCrossAxisExtent: 500,
+                  childAspectRatio: 2.7,
                 ),
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
-                    return ProcessCard('ssh', null, true);
+                    return (index == 2)
+                        ? addProcessCard()
+                        : ProcessCard('ssh', null, true);
                   },
                   childCount: 3,
                 ),
