@@ -45,10 +45,11 @@ class _TextEditorState extends State<TextEditor> {
     var s = widget.table.toString().split('\n');
     print(s.length);
     return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
       itemCount: s.length,
       itemBuilder: (BuildContext context, int index) {
         var ss = "$index";
-        while (ss.length < 3) ss = '0' + ss;
+        while (ss.length < 3) ss = ' ' + ss;
         return Container(
           child: Text(
             " $ss " + s[index],
@@ -64,11 +65,6 @@ class _TextEditorState extends State<TextEditor> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Hello'),
-      ),
-      body: _isLoading ? _buildLoading() : _buildContent(),
-    );
+    return _isLoading ? _buildLoading() : _buildContent();
   }
 }

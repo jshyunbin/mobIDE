@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mobide/backend/file_system.dart';
 import 'package:mobide/ui/terminal.dart';
+import 'package:mobide/ui/text_editor.dart';
 import 'package:mobide/ui/theme/style.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -12,6 +14,16 @@ class FileEditPage extends StatelessWidget {
   );
 
   final PanelController _pc = new PanelController();
+
+  // TODO: make final
+  SSHFile file;
+
+  FileEditPage({this.file}) {
+    // TODO: erase test code below
+    if (this.file == null) {
+      this.file = SSHFile("hello.txt", FileType.txt, "a", "a", "a");
+    }
+  }
 
   Widget _panel() {
     return Padding(
@@ -62,7 +74,7 @@ class FileEditPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(
-          'test.cpp',
+          this.file.name,
           style: Type.header4.apply(color: Colors.black),
         ),
         leading: IconButton(
@@ -77,11 +89,12 @@ class FileEditPage extends StatelessWidget {
         ],
       ),
       body: SizedBox(
-          height: 1000,
-          child: DecoratedBox(
-            decoration: BoxDecoration(color: Colors.amber),
-            child: Center(child: Text('editor property')),
-          )),
+        height: 1000,
+        child: Container(
+          margin: EdgeInsets.only(top: 10),
+          child: TextEditor.fromFile(file: this.file),
+        ),
+      ),
     );
   }
 
