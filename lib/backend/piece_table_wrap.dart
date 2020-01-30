@@ -13,8 +13,9 @@ class PieceTableWrap {
 
   PieceTableWrap(this._file);
 
-  Future<void> load() async {
+  Future<void> load(Function callback) async {
     _table = PieceTable(await _file.read());
+    callback();
   }
 
   Future<void> save() async {
@@ -30,6 +31,7 @@ class PieceTableWrap {
   }
 
   String around(int before, int after) {
+    print(_table.toString());
     return _table.around(before, after);
   }
 

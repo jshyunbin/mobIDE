@@ -31,6 +31,7 @@ dependencies:
   local_auth: 0.6.1
   sliding_up_panel: ^0.3.6
   flutter_slidable: ^0.5.4
+  loading: ^1.0.2
 
 dev_dependencies:
   flutter_test:
