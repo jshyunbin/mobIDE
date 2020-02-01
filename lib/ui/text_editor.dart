@@ -4,6 +4,31 @@ import 'package:loading/loading.dart';
 import 'package:mobide/backend/file_system.dart';
 import 'package:mobide/backend/piece_table_wrap.dart';
 
+class CursorPainter extends CustomPainter {
+  var x, y;
+  var editor;
+
+  CursorPainter(double x, double y, _TextEditorState editor) {
+    this.x = x;
+    this.y = y;
+    this.editor = editor;
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint();
+    paint.color = Colors.black;
+    var center = Offset(this.x, this.y);
+    canvas.drawRect(
+        Rect.fromCenter(center: center, width: 2, height: 16), paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
+  }
+}
+
 class TextEditor extends StatefulWidget {
   final PieceTableWrap table;
 
@@ -13,19 +38,36 @@ class TextEditor extends StatefulWidget {
       : this(table: PieceTableWrap(file));
 
   @override
-  _TextEditorState createState() => _TextEditorState();
+  _TextEditorState createState() => _TextEditorState(table);
 }
 
 class _TextEditorState extends State<TextEditor> {
   var _isLoading = true;
+  var x, y;
+  FocusNode focusNode;
+  PieceTableWrap table;
 
+  _TextEditorState(PieceTableWrap table) {
+    this.table = table;
+  }
+
+  @override
   void initState() {
     super.initState();
-    widget.table.load(() {
+    focusNode = FocusNode();
+    this.table.load(() {
       setState(() {
         _isLoading = false;
+        x = 156.0;
+        y = 10.0;
       });
     });
+  }
+
+  @override
+  void dispose() {
+    focusNode.dispose();
+    super.dispose();
   }
 
   Widget _buildLoading() {
@@ -42,13 +84,12 @@ class _TextEditorState extends State<TextEditor> {
   }
 
   Widget _buildContent() {
-    var s = widget.table.toString().split('\n');
-    print(s.length);
+    var s = this.table.toString().replaceAll("\t", "    ").split('\n');
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
       itemCount: s.length,
       itemBuilder: (BuildContext context, int index) {
-        var ss = "$index";
+        var ss = "${index + 1}";
         while (ss.length < 3) ss = ' ' + ss;
         return Container(
           child: Text(
@@ -65,6 +106,34 @@ class _TextEditorState extends State<TextEditor> {
 
   @override
   Widget build(BuildContext context) {
-    return _isLoading ? _buildLoading() : _buildContent();
+    return _isLoading
+        ? _buildLoading()
+        : Stack(
+            children: <Widget>[
+              _buildContent(),
+//              CustomPaint(
+//                painter: CursorPainter(x, y, this),
+//              ),
+              GestureDetector(
+                onTap: () {
+                  if (focusNode.hasFocus) {
+                    FocusScope.of(context).unfocus();
+                  } else {
+                    FocusScope.of(context).requestFocus(focusNode);
+                  }
+                  print("Tap");
+                },
+              ),
+              Opacity(
+                child: TextField(
+                  focusNode: focusNode,
+                  onChanged: (String text) {
+                    print(text);
+                  },
+                ),
+                opacity: 0.0,
+              ),
+            ],
+          );
   }
 }
