@@ -106,15 +106,22 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-  final ProjectContent projectContent = ProjectContent(
-    title: 'sample 0',
-    description: 'Lorem ipsum dolor '
-        'sit amet, consectetur adipiscing elit.',
-    sshId: 'jhb-gram',
-    initializedDate: '2019-12-24',
-    modifiedDate: '2019-12-24',
-  );
+  ProjectContent projectContent(int i) {
+    return ProjectContent(
+      title: 'sample 0',
+      description: (i != 0)
+          ? ((i == 1)
+              ? 'Lorem ipsum dolor sit amet, '
+                  'consectetur '
+              : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed faucibus felis vitae cursus convallis. Curabitur tincidunt nisi eget risus dignissim blandit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vivamus at fermentum nunc.'
+                  'adipiscing elit.')
+          : 'Lorem ipsum dolor sit amet, consectetur '
+              'adipiscing elit. Sed faucibus felis vitae cursus convallis. Curabitur tincidunt nisi eget risus dignissim blandit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vivamus at fermentum nunc. In at sapien vitae lacus pharetra euismod vel ac sem. Morbi diam elit, pretium volutpat laoreet id, semper a dolor. In lacus quam, bibendum non ante ac, imperdiet tempus nisi. Nulla ac neque sed mauris aliquet pulvinar.',
+      sshId: 'jhb-gram',
+      initializedDate: '2019-12-24',
+      modifiedDate: '2019-12-24',
+    );
+  }
 
   void searchChanged(String str) {
     setState(() {
@@ -194,12 +201,12 @@ class _HomePageState extends State<HomePage> {
             padding: EdgeInsets.all(10),
             sliver: SliverStaggeredGrid.countBuilder(
               crossAxisCount: 4,
-              mainAxisSpacing: 10.0,
-              crossAxisSpacing: 10.0,
+              mainAxisSpacing: 15.0,
+              crossAxisSpacing: 15.0,
               itemCount: 10,
               itemBuilder: (context, index) =>
               new ProjectListItem
-                (projectContent: projectContent,),
+                (projectContent: projectContent(index % 3),),
               staggeredTileBuilder: (index) => new StaggeredTile.fit(2),
             ),
           ),
