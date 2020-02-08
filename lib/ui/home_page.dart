@@ -1,77 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:mobide/ui/project_page.dart';
 import 'package:mobide/ui/theme/style.dart';
-
-class _ProjectDescription extends StatelessWidget {
-  _ProjectDescription({
-    Key key,
-    this.projectContent,
-  }) : super(key: key);
-
-  final ProjectContent projectContent;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Expanded(
-          flex: 2,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                '${projectContent.title}',
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const Padding(padding: EdgeInsets.only(bottom: 2.0)),
-              Text(
-                '${projectContent.description}',
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 15.0,
-                  color: Colors.black54,
-                ),
-              ),
-            ],
-          ),
-        ),
-        Expanded(
-          flex: 1,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Text(
-                (projectContent.sshId == null)
-                    ? 'local'
-                    : '${projectContent.sshId}',
-                style: const TextStyle(
-                  fontSize: 15.0,
-                  color: Colors.black87,
-                ),
-              ),
-              Text(
-                '${projectContent.initializedDate} · ${projectContent.modifiedDate} ★',
-                style: const TextStyle(
-                  fontSize: 15.0,
-                  color: Colors.black54,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
 
 class ProjectListItem extends StatelessWidget {
   ProjectListItem({
@@ -83,28 +14,85 @@ class ProjectListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
-      child: InkWell(
-        child: Ink(
-          height: 120,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 0.0, 2.0, 0.0),
-            child: _ProjectDescription(
-              projectContent: projectContent,
-            ),
+    return InkWell(
+      child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: Colors.black12,
+            borderRadius: BorderRadius.circular(12),
           ),
-        ),
-        onTap: () {
-          Navigator.push(
-            context,
-            CupertinoPageRoute(
-                builder: (context) => ProjectPage(
-                      projectContent: projectContent,
-                    )),
-          );
-        },
-      ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                  padding: EdgeInsets.all(15),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(projectContent.title, style: Type.header5),
+                      SizedBox(height: 15),
+                      Text(projectContent.description, style: Type.body1)
+                    ],
+                  )),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                    flex: 2,
+                    child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                        ),
+                        child: SizedBox(height: 10)),
+                  ),
+                  Expanded(
+                    flex: 17,
+                    child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: Colors.blue,
+                        ),
+                        child: SizedBox(height: 10)),
+                  ),
+                  Expanded(
+                    flex: 5,
+                    child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: Colors.green,
+                        ),
+                        child: SizedBox(height: 10)),
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: Colors.purple,
+                        ),
+                        child: SizedBox(height: 10)),
+                  ),
+                ],
+              ),
+              Padding(
+                  padding: EdgeInsets.all(15),
+                  child: Column(
+                    children: <Widget>[
+                      Text(projectContent.modifiedDate, style: Type.body2),
+                      SizedBox(height: 5),
+                      Text(projectContent.sshId, style: Type.body2),
+                    ],
+                  ))
+            ],
+          )),
+      highlightColor: Colors.transparent,
+      splashColor: Colors.transparent,
+      onTap: () {
+        Navigator.push(
+          context,
+          CupertinoPageRoute(
+              builder: (context) => ProjectPage(
+                    projectContent: projectContent,
+                  )),
+        );
+      },
     );
   }
 }
@@ -118,15 +106,22 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-  final ProjectContent projectContent = ProjectContent(
-    title: 'sample 0',
-    description: 'Lorem ipsum dolor '
-        'sit amet, consectetur adipiscing elit.',
-    sshId: 'jhb-gram',
-    initializedDate: '2019-12-24',
-    modifiedDate: '2019-12-24',
-  );
+  ProjectContent projectContent(int i) {
+    return ProjectContent(
+      title: 'sample 0',
+      description: (i != 0)
+          ? ((i == 1)
+              ? 'Lorem ipsum dolor sit amet, '
+                  'consectetur '
+              : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed faucibus felis vitae cursus convallis. Curabitur tincidunt nisi eget risus dignissim blandit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vivamus at fermentum nunc.'
+                  'adipiscing elit.')
+          : 'Lorem ipsum dolor sit amet, consectetur '
+              'adipiscing elit. Sed faucibus felis vitae cursus convallis. Curabitur tincidunt nisi eget risus dignissim blandit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vivamus at fermentum nunc. In at sapien vitae lacus pharetra euismod vel ac sem. Morbi diam elit, pretium volutpat laoreet id, semper a dolor. In lacus quam, bibendum non ante ac, imperdiet tempus nisi. Nulla ac neque sed mauris aliquet pulvinar.',
+      sshId: 'jhb-gram',
+      initializedDate: '2019-12-24',
+      modifiedDate: '2019-12-24',
+    );
+  }
 
   void searchChanged(String str) {
     setState(() {
@@ -202,18 +197,17 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  ProjectListItem(
-                    projectContent: projectContent,
-                  ),
-                  Divider()
-                ],
-              ),
-              childCount: 7,
+          SliverPadding(
+            padding: EdgeInsets.all(10),
+            sliver: SliverStaggeredGrid.countBuilder(
+              crossAxisCount: 4,
+              mainAxisSpacing: 15.0,
+              crossAxisSpacing: 15.0,
+              itemCount: 10,
+              itemBuilder: (context, index) =>
+              new ProjectListItem
+                (projectContent: projectContent(index % 3),),
+              staggeredTileBuilder: (index) => new StaggeredTile.fit(2),
             ),
           ),
         ],
