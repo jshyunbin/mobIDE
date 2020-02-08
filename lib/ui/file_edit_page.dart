@@ -90,10 +90,7 @@ class FileEditPage extends StatelessWidget {
       ),
       body: SizedBox(
         height: 1000,
-        child: Container(
-          margin: EdgeInsets.only(top: 10),
-          child: TextEditor.fromFile(file: this.file),
-        ),
+        child: TextEditor.fromFile(file: this.file),
       ),
     );
   }

@@ -6,11 +6,15 @@ import 'package:mobide/backend/piece_table_wrap.dart';
 
 class CursorPainter extends CustomPainter {
   var x, y;
+  var w, h;
   var editor;
 
-  CursorPainter(double x, double y, _TextEditorState editor) {
+  CursorPainter(
+      double x, double y, double w, double h, _TextEditorState editor) {
     this.x = x;
     this.y = y;
+    this.w = w;
+    this.h = h;
     this.editor = editor;
   }
 
@@ -18,9 +22,9 @@ class CursorPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint();
     paint.color = Colors.black;
-    var center = Offset(this.x, this.y);
+    var center = Offset(this.x, this.y + this.h / 2);
     canvas.drawRect(
-        Rect.fromCenter(center: center, width: 2, height: 16), paint);
+        Rect.fromCenter(center: center, width: w, height: h), paint);
   }
 
   @override
@@ -43,9 +47,12 @@ class TextEditor extends StatefulWidget {
 
 class _TextEditorState extends State<TextEditor> {
   var _isLoading = true;
+  var _isTyping = false;
   var x, y;
   FocusNode focusNode;
   PieceTableWrap table;
+  var controller = TextEditingController(text: "Hello");
+  Size size;
 
   _TextEditorState(PieceTableWrap table) {
     this.table = table;
@@ -54,19 +61,34 @@ class _TextEditorState extends State<TextEditor> {
   @override
   void initState() {
     super.initState();
-    focusNode = FocusNode();
+    this.focusNode = FocusNode();
     this.table.load(() {
       setState(() {
-        _isLoading = false;
-        x = 156.0;
-        y = 10.0;
+        this._isLoading = false;
+        this.x = 4.0;
+        this.y = 0.0;
       });
     });
+    var painter = TextPainter(
+      text: TextSpan(
+        text: " ",
+        style: TextStyle(
+          fontFamily: 'Menlo',
+          fontSize: 16,
+        ),
+      ),
+      maxLines: 1,
+      textDirection: TextDirection.ltr,
+    )
+      ..layout(minWidth: 0, maxWidth: double.infinity);
+    this.size = painter.size;
+    print(this.size.width);
+    print(this.size.height);
   }
 
   @override
   void dispose() {
-    focusNode.dispose();
+    this.focusNode.dispose();
     super.dispose();
   }
 
@@ -106,34 +128,45 @@ class _TextEditorState extends State<TextEditor> {
 
   @override
   Widget build(BuildContext context) {
-    return _isLoading
+    return this._isLoading
         ? _buildLoading()
-        : Stack(
-            children: <Widget>[
-              _buildContent(),
-//              CustomPaint(
-//                painter: CursorPainter(x, y, this),
-//              ),
-              GestureDetector(
-                onTap: () {
-                  if (focusNode.hasFocus) {
-                    FocusScope.of(context).unfocus();
-                  } else {
-                    FocusScope.of(context).requestFocus(focusNode);
-                  }
-                  print("Tap");
+        : Container(
+      margin: EdgeInsets.only(top: 10),
+      child: Stack(
+        children: <Widget>[
+          _buildContent(),
+          CustomPaint(
+            painter: CursorPainter((this.x + 5) * this.size.width,
+                this.y * this.size.height, 2, this.size.height, this),
+          ),
+          GestureDetector(
+            onTap: () {
+              if (this.focusNode.hasFocus) {
+                FocusScope.of(context).unfocus();
+                this._isTyping = false;
+              } else {
+                FocusScope.of(context).requestFocus(this.focusNode);
+                this._isTyping = true;
+              }
+            },
+          ),
+          Opacity(
+            child: Container(
+              child: TextField(
+                focusNode: this.focusNode,
+                onChanged: (String text) {
+                  this.controller.text = "Hello";
                 },
+                controller: this.controller,
+                maxLines: 2,
+                keyboardType: TextInputType.multiline,
               ),
-              Opacity(
-                child: TextField(
-                  focusNode: focusNode,
-                  onChanged: (String text) {
-                    print(text);
-                  },
-                ),
-                opacity: 0.0,
-              ),
-            ],
-          );
+              height: 0,
+            ),
+            opacity: 0.0,
+          ),
+        ],
+      ),
+    );
   }
 }
