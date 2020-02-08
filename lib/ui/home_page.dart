@@ -108,9 +108,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   ProjectContent projectContent(int i) {
     return ProjectContent(
-      title: 'sample 0',
-      description: (i != 0)
-          ? ((i == 1)
+      title: 'sample $i',
+      description: (i % 3 != 0)
+          ? ((i % 3 == 1)
               ? 'Lorem ipsum dolor sit amet, '
                   'consectetur '
               : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed faucibus felis vitae cursus convallis. Curabitur tincidunt nisi eget risus dignissim blandit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vivamus at fermentum nunc.'
@@ -206,8 +206,13 @@ class _HomePageState extends State<HomePage> {
               itemCount: 10,
               itemBuilder: (context, index) =>
               new ProjectListItem
-                (projectContent: projectContent(index % 3),),
-              staggeredTileBuilder: (index) => new StaggeredTile.fit(2),
+                (projectContent: projectContent(index),),
+              staggeredTileBuilder: (index) =>
+              new StaggeredTile.fit(
+                  (MediaQuery
+                      .of(context)
+                      .size
+                      .width > 600) ? 2 : 4),
             ),
           ),
         ],
