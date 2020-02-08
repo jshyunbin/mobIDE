@@ -53,6 +53,7 @@ class _ProcessCardState extends State<ProcessCard> {
                       color: Colors.white,
                     ),
                     onPressed: _onOpen,
+                    iconSize: 30.0,
                   ),
                 ],
               ),
