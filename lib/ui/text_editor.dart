@@ -79,8 +79,7 @@ class _TextEditorState extends State<TextEditor> {
       ),
       maxLines: 1,
       textDirection: TextDirection.ltr,
-    )
-      ..layout(minWidth: 0, maxWidth: double.infinity);
+    )..layout(minWidth: 0, maxWidth: double.infinity);
     this.size = painter.size;
     print(this.size.width);
     print(this.size.height);
