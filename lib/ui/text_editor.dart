@@ -130,42 +130,42 @@ class _TextEditorState extends State<TextEditor> {
     return this._isLoading
         ? _buildLoading()
         : Container(
-      margin: EdgeInsets.only(top: 10),
-      child: Stack(
-        children: <Widget>[
-          _buildContent(),
-          CustomPaint(
-            painter: CursorPainter((this.x + 5) * this.size.width,
-                this.y * this.size.height, 2, this.size.height, this),
-          ),
-          GestureDetector(
-            onTap: () {
-              if (this.focusNode.hasFocus) {
-                FocusScope.of(context).unfocus();
-                this._isTyping = false;
-              } else {
-                FocusScope.of(context).requestFocus(this.focusNode);
-                this._isTyping = true;
-              }
-            },
-          ),
-          Opacity(
-            child: Container(
-              child: TextField(
-                focusNode: this.focusNode,
-                onChanged: (String text) {
-                  this.controller.text = "Hello";
-                },
-                controller: this.controller,
-                maxLines: 2,
-                keyboardType: TextInputType.multiline,
-              ),
-              height: 0,
+            margin: EdgeInsets.only(top: 10),
+            child: Stack(
+              children: <Widget>[
+                _buildContent(),
+                CustomPaint(
+                  painter: CursorPainter((this.x + 5) * this.size.width,
+                      this.y * this.size.height, 2, this.size.height, this),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    if (this.focusNode.hasFocus) {
+                      FocusScope.of(context).unfocus();
+                      this._isTyping = false;
+                    } else {
+                      FocusScope.of(context).requestFocus(this.focusNode);
+                      this._isTyping = true;
+                    }
+                  },
+                ),
+                Opacity(
+                  child: Container(
+                    child: TextField(
+                      focusNode: this.focusNode,
+                      onChanged: (String text) {
+                        this.controller.text = "Hello";
+                      },
+                      controller: this.controller,
+                      maxLines: 2,
+                      keyboardType: TextInputType.multiline,
+                    ),
+                    height: 0,
+                  ),
+                  opacity: 0.0,
+                ),
+              ],
             ),
-            opacity: 0.0,
-          ),
-        ],
-      ),
-    );
+          );
   }
 }
