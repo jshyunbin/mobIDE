@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:mobide/ui/add_project.dart';
 import 'package:mobide/ui/project_page.dart';
 import 'package:mobide/ui/theme/style.dart';
 
@@ -129,8 +130,9 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void _addPressed() {
-    setState(() {});
+  void _addPressed(context) {
+    showCupertinoModalPopup(
+        context: context, builder: (context) => AddProject());
   }
 
   @override
@@ -158,7 +160,7 @@ class _HomePageState extends State<HomePage> {
                   Icons.add,
                   color: Colors.black,
                 ),
-                onPressed: _addPressed,
+                onPressed: () => _addPressed(context),
               ),
               SizedBox(width: 10),
             ],

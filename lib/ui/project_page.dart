@@ -52,8 +52,6 @@ class ProjectPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final MediaQueryData media = MediaQuery.of(context);
-
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
