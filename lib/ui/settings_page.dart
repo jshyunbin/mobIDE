@@ -97,7 +97,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     width: double.infinity,
                                     child: CupertinoTextField(
                                       keyboardType: TextInputType.text,
-                                      placeholder: 'Search for projects',
+                                      placeholder: 'Search for settings',
                                       placeholderStyle: Type.subtitle1.apply(
                                         color: Color(0xffC4C6CC),
                                       ),
@@ -181,7 +181,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             width: double.infinity,
                             child: CupertinoTextField(
                               keyboardType: TextInputType.text,
-                              placeholder: 'Search for projects',
+                              placeholder: 'Search for settings',
                               placeholderStyle: Type.subtitle1.apply(
                                 color: Color(0xffC4C6CC),
                               ),

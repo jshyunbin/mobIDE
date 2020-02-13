@@ -47,21 +47,34 @@ class AddProject extends StatelessWidget {
                         ),
                         child: Column(
                           children: <Widget>[
-                            ListTile(
-                              title: Text('Project Title'),
+                            CupertinoTextField(
+                              keyboardType: TextInputType.text,
+                              placeholder: 'Project Title',
                             ),
-                            ListTile(
-                              title: Text('Project Description'),
+                            CupertinoTextField(
+                              keyboardType: TextInputType.text,
+                              placeholder: 'Project Description',
                             ),
-                            ListTile(
-                              title: Text('SSH Server'),
+                            CupertinoTextField(
+                              keyboardType: TextInputType.text,
+                              placeholder: 'SSH host',
                             ),
-                            ListTile(
-                              title: Text('path to project'),
+                            CupertinoTextField(
+                              keyboardType: TextInputType.text,
+                              placeholder: 'SSH port',
                             ),
-                            ListTile(
-                              title: Text('etc... fill this out later...'),
-                            )
+                            CupertinoTextField(
+                              keyboardType: TextInputType.text,
+                              placeholder: 'SSH username',
+                            ),
+                            CupertinoTextField(
+                              keyboardType: TextInputType.text,
+                              placeholder: 'SSH password',
+                            ),
+                            CupertinoTextField(
+                              keyboardType: TextInputType.text,
+                              placeholder: 'Project Path',
+                            ),
                           ],
                         ),
                       )
