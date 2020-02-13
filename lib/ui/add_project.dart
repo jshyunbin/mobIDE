@@ -24,21 +24,44 @@ class AddProject extends StatelessWidget {
                         children: <Widget>[
                           FlatButton(child: Text('Cancle', style: Type.body1
                               .apply(color: Colors.blue),),
-                            onPressed: () => Navigator.pop(context),),
-                          Text('Add Project', style: Type.header5,),
-                          FlatButton(child: Text('Add', style: Type.body1
-                              .apply(color: Colors.blue),),
-                            onPressed: null,),
+                            onPressed: () => Navigator.pop(context),
+                          ),
+                          Text(
+                            'Add Project',
+                            style: Type.header5,
+                          ),
+                          FlatButton(
+                            child: Text(
+                              'Add',
+                              style: Type.body1.apply(color: Colors.blue),
+                            ),
+                            onPressed: null,
+                          ),
                         ],
                       ),
-
                       Divider(),
-
-                      Padding(
-                        padding: EdgeInsets.all(10),
+                      DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: Colors.black12,
+                          border: Border.all(color: Colors.black38, width: 1),
+                        ),
                         child: Column(
                           children: <Widget>[
-
+                            ListTile(
+                              title: Text('Project Title'),
+                            ),
+                            ListTile(
+                              title: Text('Project Description'),
+                            ),
+                            ListTile(
+                              title: Text('SSH Server'),
+                            ),
+                            ListTile(
+                              title: Text('path to project'),
+                            ),
+                            ListTile(
+                              title: Text('etc... fill this out later...'),
+                            )
                           ],
                         ),
                       )

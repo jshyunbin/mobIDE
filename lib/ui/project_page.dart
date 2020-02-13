@@ -55,17 +55,18 @@ class ProjectPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios, color: Colors.black),
-            onPressed: () => Navigator.pop(context),
-          ),
-          title: Text(
-            projectContent.title,
-            style: Type.header4.apply(color: Colors.black),
-          ),
-          backgroundColor: Colors.white,
-          elevation: 0,
+          icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+          onPressed: () => Navigator.pop(context),
         ),
-        body: CustomScrollView(
+        title: Text(
+          projectContent.title,
+          style: Type.header4.apply(color: Colors.black),
+        ),
+        backgroundColor: Colors.white,
+        elevation: 0,
+      ),
+      body: CupertinoScrollbar(
+        child: CustomScrollView(
           slivers: <Widget>[
             SliverPadding(
               padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0),
@@ -170,7 +171,8 @@ class ProjectPage extends StatelessWidget {
               ),
             ),
           ],
-        )
+        ),
+      ),
     );
   }
 }
