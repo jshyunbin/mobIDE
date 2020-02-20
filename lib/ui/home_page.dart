@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:mobide/ui/add_project.dart';
 import 'package:mobide/ui/project_page.dart';
 import 'package:mobide/ui/theme/style.dart';
 
@@ -129,94 +130,93 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void _addPressed() {
-    setState(() {});
+  void _addPressed(context) {
+    showCupertinoModalPopup(
+        context: context, builder: (context) => AddProject());
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       bottom: false,
-      child: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            expandedHeight: 125.0,
-            backgroundColor: Colors.white,
-            pinned: true,
-            floating: true,
-            snap: true,
-            title: Padding(
-              padding: EdgeInsets.all(10),
-              child: Text(
-                'Projects',
-                style: Type.header4.apply(color: Colors.black),
-              ),
-            ),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(
-                  Icons.add,
-                  color: Colors.black,
+        child: CupertinoScrollbar(
+          child: CustomScrollView(
+            slivers: <Widget>[
+              SliverAppBar(
+                expandedHeight: 125.0,
+                backgroundColor: Colors.white,
+                pinned: true,
+                floating: true,
+                snap: true,
+                title: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text(
+                    'Projects',
+                    style: Type.header4.apply(color: Colors.black),
+                  ),
                 ),
-                onPressed: _addPressed,
-              ),
-              SizedBox(width: 10),
-            ],
-            flexibleSpace: FlexibleSpaceBar(
-              background: Column(
-                children: <Widget>[
-                  SizedBox(height: 60.0),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16.0, 6.0, 16.0, 16.0),
-                    child: Container(
-                      height: 36.0,
-                      width: double.infinity,
-                      child: CupertinoTextField(
-                        keyboardType: TextInputType.text,
-                        placeholder: 'Search for projects',
-                        placeholderStyle: Type.subtitle1.apply(
-                          color: Color(0xffC4C6CC),
-                        ),
-                        prefix: Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(9.0, 6.0, 9.0, 6.0),
-                          child: Icon(
-                            Icons.search,
-                            color: Color(0xffC4C6CC),
+                actions: <Widget>[
+                  IconButton(
+                    icon: Icon(
+                      Icons.add,
+                      color: Colors.black,
+                    ),
+                    onPressed: () => _addPressed(context),
+                  ),
+                  SizedBox(width: 10),
+                ],
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Column(
+                    children: <Widget>[
+                      SizedBox(height: 60.0),
+                      Padding(
+                        padding:
+                            const EdgeInsets.fromLTRB(16.0, 6.0, 16.0, 16.0),
+                        child: Container(
+                          height: 36.0,
+                          width: double.infinity,
+                          child: CupertinoTextField(
+                            keyboardType: TextInputType.text,
+                            placeholder: 'Search for projects',
+                            placeholderStyle: Type.subtitle1.apply(
+                              color: Color(0xffC4C6CC),
+                            ),
+                            prefix: Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(9.0, 6.0, 9.0, 6.0),
+                              child: Icon(
+                                Icons.search,
+                                color: Color(0xffC4C6CC),
+                              ),
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.0),
+                              color: Color(0xffF0F1F5),
+                            ),
+                            onChanged: searchChanged,
                           ),
                         ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.0),
-                          color: Color(0xffF0F1F5),
-                        ),
-                        onChanged: searchChanged,
                       ),
-                    ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
+              SliverPadding(
+                padding: EdgeInsets.all(15),
+                sliver: SliverStaggeredGrid.countBuilder(
+                  crossAxisCount: 4,
+                  mainAxisSpacing: 15.0,
+                  crossAxisSpacing: 15.0,
+                  itemCount: 10,
+                  itemBuilder: (context, index) => new ProjectListItem(
+                    projectContent: projectContent(index),
+                  ),
+                  staggeredTileBuilder: (index) => new StaggeredTile.fit(
+                      (MediaQuery.of(context).size.width > 600) ? 2 : 4),
+                ),
+              ),
+            ],
           ),
-          SliverPadding(
-            padding: EdgeInsets.all(10),
-            sliver: SliverStaggeredGrid.countBuilder(
-              crossAxisCount: 4,
-              mainAxisSpacing: 15.0,
-              crossAxisSpacing: 15.0,
-              itemCount: 10,
-              itemBuilder: (context, index) =>
-              new ProjectListItem
-                (projectContent: projectContent(index),),
-              staggeredTileBuilder: (index) =>
-              new StaggeredTile.fit(
-                  (MediaQuery
-                      .of(context)
-                      .size
-                      .width > 600) ? 2 : 4),
-            ),
-          ),
-        ],
-      ),
-    );
+        ));
   }
 }
