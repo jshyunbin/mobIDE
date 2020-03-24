@@ -67,6 +67,7 @@ class FileEditPage extends StatelessWidget {
         ],
       ),
     );
+    // TODO: make SFTP panel
   }
 
   Widget _body(context) {
