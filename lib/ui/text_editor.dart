@@ -129,6 +129,7 @@ class _TextEditorState extends State<TextEditor> {
     var ss = "${this.table.cursorX + 1}";
     while (ss.length < 3) ss = ' ' + ss;
     var size = getSize(" $ss " + s);
+    var oneWidth = getSize("k").width;
     return this._isLoading
         ? _buildLoading()
         : Container(
@@ -148,6 +149,28 @@ class _TextEditorState extends State<TextEditor> {
                     } else {
                       FocusScope.of(context).requestFocus(this.focusNode);
                       this._isTyping = true;
+                    }
+                  },
+                  onVerticalDragUpdate: (details) {
+                    if (details.delta.dy >= size.height / 3) {
+                      setState(() {
+                        this.table.moveDown();
+                      });
+                    } else if (details.delta.dy <= -size.height / 3) {
+                      setState(() {
+                        this.table.moveUp();
+                      });
+                    }
+                  },
+                  onHorizontalDragUpdate: (details) {
+                    if (details.delta.dx >= oneWidth / 3) {
+                      setState(() {
+                        this.table.moveRight();
+                      });
+                    } else if (details.delta.dx <= -oneWidth / 3) {
+                      setState(() {
+                        this.table.moveLeft();
+                      });
                     }
                   },
                 ),
