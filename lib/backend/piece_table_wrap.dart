@@ -17,7 +17,7 @@ import 'package:mobide/backend/file_system.dart';
 
 class PieceTableWrap {
   SSHFile _file;
-  List<String> data;
+  List<String> data = [""];
 
   SSHFile get file => _file;
 
