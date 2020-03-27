@@ -16,7 +16,7 @@ class PieceTableWrap {
 
   int get cursorX => _cursorX;
 
-  int get cursorY => _cursorY;
+  int get cursorY => min(_cursorY, data[_cursorX].length);
 
   PieceTableWrap(this._file);
 
@@ -32,8 +32,9 @@ class PieceTableWrap {
   }
 
   void write(int c) {
+    _cursorY = cursorY;
     if (c == '\n'.codeUnitAt(0)) {
-      var t = data[_cursorX].substring(_cursorY);
+      var t = data[_cursorX].substring(cursorY);
       data[_cursorX] = data[_cursorX].substring(0, _cursorY);
       data.insert(++_cursorX, t);
       _cursorY = 0;
@@ -54,6 +55,7 @@ class PieceTableWrap {
   }
 
   void backspace() {
+    _cursorY = cursorY;
     if (_cursorY == 0) {
       if (_cursorX != 0) {
         --_cursorX;
@@ -71,19 +73,19 @@ class PieceTableWrap {
 
   void moveUp() {
     if (_cursorX != 0) _cursorX--;
-    _cursorY = min(_cursorY, data[_cursorX].length);
   }
 
   void moveDown() {
-    if (_cursorX != data.length) _cursorX++;
-    _cursorY = min(_cursorY, data[_cursorX].length);
+    if (_cursorX != data.length - 1) _cursorX++;
   }
 
   void moveLeft() {
+    _cursorY = cursorY;
     if (_cursorY != 0) _cursorY--;
   }
 
   void moveRight() {
+    _cursorY = cursorY;
     if (_cursorY != data[_cursorX].length) _cursorY++;
   }
 
@@ -92,9 +94,9 @@ class PieceTableWrap {
   }
 
   String currentWord() {
-    var s = currentLine().substring(0, _cursorY).split(" ").last;
+    var s = currentLine().substring(0, cursorY).split(" ").last;
     if (s.isNotEmpty) return s;
-    if (_cursorX == 0 && _cursorY == 0) return "";
+    if (_cursorX == 0 && cursorY == 0) return "";
     return " ";
   }
 

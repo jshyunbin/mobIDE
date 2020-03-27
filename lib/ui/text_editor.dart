@@ -52,6 +52,7 @@ class _TextEditorState extends State<TextEditor> {
   FocusNode focusNode;
   PieceTableWrap table;
   var controller = TextEditingController(text: "Hello");
+  var startX, startY;
 
   _TextEditorState(PieceTableWrap table) {
     this.table = table;
@@ -151,26 +152,34 @@ class _TextEditorState extends State<TextEditor> {
                       this._isTyping = true;
                     }
                   },
-                  onVerticalDragUpdate: (details) {
-                    if (details.delta.dy >= size.height / 3) {
+                  onPanDown: (details) {
+                    startX = details.globalPosition.dx;
+                    startY = details.globalPosition.dy;
+                  },
+                  onPanUpdate: (details) {
+                    var dx = details.globalPosition.dx - startX;
+                    var dy = details.globalPosition.dy - startY;
+
+                    if (dy >= size.height) {
+                      startY += size.height;
                       setState(() {
                         this.table.moveDown();
                         this.controller.text = this.table.currentWord();
                       });
-                    } else if (details.delta.dy <= -size.height / 3) {
+                    } else if (dy <= -size.height) {
+                      startY -= size.height;
                       setState(() {
                         this.table.moveUp();
                         this.controller.text = this.table.currentWord();
                       });
-                    }
-                  },
-                  onHorizontalDragUpdate: (details) {
-                    if (details.delta.dx >= oneWidth / 3) {
+                    } else if (dx >= oneWidth) {
+                      startX += oneWidth;
                       setState(() {
                         this.table.moveRight();
                         this.controller.text = this.table.currentWord();
                       });
-                    } else if (details.delta.dx <= -oneWidth / 3) {
+                    } else if (dx <= -oneWidth) {
+                      startX -= oneWidth;
                       setState(() {
                         this.table.moveLeft();
                         this.controller.text = this.table.currentWord();
