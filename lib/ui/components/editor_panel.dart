@@ -14,7 +14,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobide/ui/components/sftp.dart';
-import 'package:mobide/ui/terminal.dart';
+import 'package:mobide/ui/components/terminal.dart';
 import 'package:mobide/ui/theme/style.dart';
 
 class EditorPanel extends StatefulWidget {
