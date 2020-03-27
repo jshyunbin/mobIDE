@@ -155,10 +155,12 @@ class _TextEditorState extends State<TextEditor> {
                     if (details.delta.dy >= size.height / 3) {
                       setState(() {
                         this.table.moveDown();
+                        this.controller.text = this.table.currentWord();
                       });
                     } else if (details.delta.dy <= -size.height / 3) {
                       setState(() {
                         this.table.moveUp();
+                        this.controller.text = this.table.currentWord();
                       });
                     }
                   },
@@ -166,10 +168,12 @@ class _TextEditorState extends State<TextEditor> {
                     if (details.delta.dx >= oneWidth / 3) {
                       setState(() {
                         this.table.moveRight();
+                        this.controller.text = this.table.currentWord();
                       });
                     } else if (details.delta.dx <= -oneWidth / 3) {
                       setState(() {
                         this.table.moveLeft();
+                        this.controller.text = this.table.currentWord();
                       });
                     }
                   },
@@ -183,13 +187,14 @@ class _TextEditorState extends State<TextEditor> {
                         if (text.length > s.length) {
                           setState(() {
                             this.table.write(text.runes.last);
+                            this.controller.text = this.table.currentWord();
                           });
                         } else if (text.length < s.length) {
                           setState(() {
                             this.table.backspace();
+                            this.controller.text = this.table.currentWord();
                           });
                         }
-                        this.controller.text = this.table.currentWord();
                       },
                       controller: this.controller,
                       maxLines: 2,

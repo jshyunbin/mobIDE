@@ -22,7 +22,7 @@ class PieceTableWrap {
 
   Future<void> load(Function callback) async {
     var s = await _file.read();
-    data = s.split("\n");
+    data = s.replaceAll("\t", "    ").split("\n");
     _length = s.length;
     callback();
   }
@@ -47,6 +47,7 @@ class PieceTableWrap {
   }
 
   void writeString(String s) {
+    s.replaceAll("\t", "    ");
     for (var i in s.runes) {
       write(i);
     }
