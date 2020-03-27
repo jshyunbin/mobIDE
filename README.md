@@ -10,6 +10,8 @@ The 'mobIDE' app is an open source mobile IDE that provides desktop experience. 
 - Version Control
 - Run project from SSH Server
 - SSH Server Terminal
+- Offline Editing
+- project file management
 ```
 
-The mobIDE app is still in progress of developing - the first version will be released around March 2020.
+The mobIDE app is still in progress of developing - the first version will be released around 2021.
