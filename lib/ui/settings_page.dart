@@ -1,3 +1,16 @@
+//Copyright 2020 Joshua Hyunbin Lee, Jaeyong Sung
+//
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//You may obtain a copy of the License at
+//
+//http://www.apache.org/licenses/LICENSE-2.0
+//
+//Unless required by applicable law or agreed to in writing, software
+//distributed under the License is distributed on an "AS IS" BASIS,
+//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//See the License for the specific language governing permissions and
+//limitations under the License.
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobide/ui/theme/style.dart';
@@ -68,7 +81,7 @@ class _SettingsPageState extends State<SettingsPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Expanded(
-                flex: 1,
+                  flex: 1,
                   child: CupertinoScrollbar(
                     child: CustomScrollView(
                       slivers: <Widget>[
@@ -111,7 +124,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                       ),
                                       decoration: BoxDecoration(
                                         borderRadius:
-                                            BorderRadius.circular(8.0),
+                                        BorderRadius.circular(8.0),
                                         color: Color(0xffF0F1F5),
                                       ),
                                       onChanged: _searchChanged,
@@ -124,7 +137,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         SliverList(
                           delegate: SliverChildBuilderDelegate(
-                            (context, index) => Column(
+                                (context, index) => Column(
                               children: <Widget>[
                                 ListTile(
                                   leading: settingsComponents[index].icon,
@@ -175,7 +188,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         SizedBox(height: 60.0),
                         Padding(
                           padding:
-                              const EdgeInsets.fromLTRB(16.0, 6.0, 16.0, 16.0),
+                          const EdgeInsets.fromLTRB(16.0, 6.0, 16.0, 16.0),
                           child: Container(
                             height: 36.0,
                             width: double.infinity,
@@ -207,7 +220,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
-                    (context, index) => Column(
+                        (context, index) => Column(
                       children: <Widget>[
                         ListTile(
                           leading: settingsComponents[index].icon,
