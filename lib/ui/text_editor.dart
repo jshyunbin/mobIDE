@@ -118,7 +118,7 @@ class _TextEditorState extends State<TextEditor> {
   Widget _buildContent() {
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: this.table.data.length,
+      itemCount: this.table.data.length - startIndex,
       itemBuilder: (BuildContext context, int index) {
         index += startIndex;
         var ss = "${index + 1}";
@@ -152,7 +152,7 @@ class _TextEditorState extends State<TextEditor> {
                 _buildContent(),
                 CustomPaint(
                   painter: CursorPainter(size.width,
-                      size.height * this.table.cursorX, 2, size.height, this),
+                      size.height * (this.table.cursorX - this.startIndex), 2, size.height, this),
                 ),
                 GestureDetector(
                   onTap: () {
@@ -176,12 +176,18 @@ class _TextEditorState extends State<TextEditor> {
                       startY += size.height;
                       setState(() {
                         this.table.moveDown();
+                        if(this.table.cursorX - this.startIndex >= 20) {
+                          this.startIndex++;
+                        }
                         this.controller.text = this.table.currentWord();
                       });
                     } else if (dy <= -size.height) {
                       startY -= size.height;
                       setState(() {
                         this.table.moveUp();
+                        if(this.table.cursorX - this.startIndex <= 0 && this.startIndex > 0) {
+                          this.startIndex--;
+                        }
                         this.controller.text = this.table.currentWord();
                       });
                     } else if (dx >= oneWidth) {
@@ -209,11 +215,23 @@ class _TextEditorState extends State<TextEditor> {
                         if (text.length > s.length) {
                           setState(() {
                             this.table.write(text.runes.last);
+                            if(this.table.cursorX - this.startIndex <= 0 && this.startIndex > 0) {
+                              this.startIndex--;
+                            }
+                            if(this.table.cursorX - this.startIndex >= 20) {
+                              this.startIndex++;
+                            }
                             this.controller.text = this.table.currentWord();
                           });
                         } else if (text.length < s.length) {
                           setState(() {
                             this.table.backspace();
+                            if(this.table.cursorX - this.startIndex <= 0 && this.startIndex > 0) {
+                              this.startIndex--;
+                            }
+                            if(this.table.cursorX - this.startIndex >= 20) {
+                              this.startIndex++;
+                            }
                             this.controller.text = this.table.currentWord();
                           });
                         }
