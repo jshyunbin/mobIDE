@@ -1,6 +1,20 @@
+//Copyright 2020 Joshua Hyunbin Lee, Jaeyong Sung
+//
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//You may obtain a copy of the License at
+//
+//http://www.apache.org/licenses/LICENSE-2.0
+//
+//Unless required by applicable law or agreed to in writing, software
+//distributed under the License is distributed on an "AS IS" BASIS,
+//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//See the License for the specific language governing permissions and
+//limitations under the License.
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:mobide/ui/add_project.dart';
 import 'package:mobide/ui/project_page.dart';
 import 'package:mobide/ui/theme/style.dart';
 
@@ -89,8 +103,8 @@ class ProjectListItem extends StatelessWidget {
           context,
           CupertinoPageRoute(
               builder: (context) => ProjectPage(
-                    projectContent: projectContent,
-                  )),
+                projectContent: projectContent,
+              )),
         );
       },
     );
@@ -108,15 +122,15 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   ProjectContent projectContent(int i) {
     return ProjectContent(
-      title: 'sample 0',
-      description: (i != 0)
-          ? ((i == 1)
-              ? 'Lorem ipsum dolor sit amet, '
-                  'consectetur '
-              : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed faucibus felis vitae cursus convallis. Curabitur tincidunt nisi eget risus dignissim blandit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vivamus at fermentum nunc.'
-                  'adipiscing elit.')
+      title: 'sample $i',
+      description: (i % 3 != 0)
+          ? ((i % 3 == 1)
+          ? 'Lorem ipsum dolor sit amet, '
+          'consectetur '
+          : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed faucibus felis vitae cursus convallis. Curabitur tincidunt nisi eget risus dignissim blandit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vivamus at fermentum nunc.'
+          'adipiscing elit.')
           : 'Lorem ipsum dolor sit amet, consectetur '
-              'adipiscing elit. Sed faucibus felis vitae cursus convallis. Curabitur tincidunt nisi eget risus dignissim blandit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vivamus at fermentum nunc. In at sapien vitae lacus pharetra euismod vel ac sem. Morbi diam elit, pretium volutpat laoreet id, semper a dolor. In lacus quam, bibendum non ante ac, imperdiet tempus nisi. Nulla ac neque sed mauris aliquet pulvinar.',
+          'adipiscing elit. Sed faucibus felis vitae cursus convallis. Curabitur tincidunt nisi eget risus dignissim blandit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vivamus at fermentum nunc. In at sapien vitae lacus pharetra euismod vel ac sem. Morbi diam elit, pretium volutpat laoreet id, semper a dolor. In lacus quam, bibendum non ante ac, imperdiet tempus nisi. Nulla ac neque sed mauris aliquet pulvinar.',
       sshId: 'jhb-gram',
       initializedDate: '2019-12-24',
       modifiedDate: '2019-12-24',
@@ -129,89 +143,93 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void _addPressed() {
-    setState(() {});
+  void _addPressed(context) {
+    showCupertinoModalPopup(
+        context: context, builder: (context) => AddProject());
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      bottom: false,
-      child: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            expandedHeight: 125.0,
-            backgroundColor: Colors.white,
-            pinned: true,
-            floating: true,
-            snap: true,
-            title: Padding(
-              padding: EdgeInsets.all(10),
-              child: Text(
-                'Projects',
-                style: Type.header4.apply(color: Colors.black),
-              ),
-            ),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(
-                  Icons.add,
-                  color: Colors.black,
+        bottom: false,
+        child: CupertinoScrollbar(
+          child: CustomScrollView(
+            slivers: <Widget>[
+              SliverAppBar(
+                expandedHeight: 125.0,
+                backgroundColor: Colors.white,
+                pinned: true,
+                floating: true,
+                snap: true,
+                title: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text(
+                    'Projects',
+                    style: Type.header4.apply(color: Colors.black),
+                  ),
                 ),
-                onPressed: _addPressed,
-              ),
-              SizedBox(width: 10),
-            ],
-            flexibleSpace: FlexibleSpaceBar(
-              background: Column(
-                children: <Widget>[
-                  SizedBox(height: 60.0),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16.0, 6.0, 16.0, 16.0),
-                    child: Container(
-                      height: 36.0,
-                      width: double.infinity,
-                      child: CupertinoTextField(
-                        keyboardType: TextInputType.text,
-                        placeholder: 'Search for projects',
-                        placeholderStyle: Type.subtitle1.apply(
-                          color: Color(0xffC4C6CC),
-                        ),
-                        prefix: Padding(
-                          padding:
+                actions: <Widget>[
+                  IconButton(
+                    icon: Icon(
+                      Icons.add,
+                      color: Colors.black,
+                    ),
+                    onPressed: () => _addPressed(context),
+                  ),
+                  SizedBox(width: 10),
+                ],
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Column(
+                    children: <Widget>[
+                      SizedBox(height: 60.0),
+                      Padding(
+                        padding:
+                        const EdgeInsets.fromLTRB(16.0, 6.0, 16.0, 16.0),
+                        child: Container(
+                          height: 36.0,
+                          width: double.infinity,
+                          child: CupertinoTextField(
+                            keyboardType: TextInputType.text,
+                            placeholder: 'Search for projects',
+                            placeholderStyle: Type.subtitle1.apply(
+                              color: Color(0xffC4C6CC),
+                            ),
+                            prefix: Padding(
+                              padding:
                               const EdgeInsets.fromLTRB(9.0, 6.0, 9.0, 6.0),
-                          child: Icon(
-                            Icons.search,
-                            color: Color(0xffC4C6CC),
+                              child: Icon(
+                                Icons.search,
+                                color: Color(0xffC4C6CC),
+                              ),
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.0),
+                              color: Color(0xffF0F1F5),
+                            ),
+                            onChanged: searchChanged,
                           ),
                         ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.0),
-                          color: Color(0xffF0F1F5),
-                        ),
-                        onChanged: searchChanged,
                       ),
-                    ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
+              SliverPadding(
+                padding: EdgeInsets.all(15),
+                sliver: SliverStaggeredGrid.countBuilder(
+                  crossAxisCount: 4,
+                  mainAxisSpacing: 15.0,
+                  crossAxisSpacing: 15.0,
+                  itemCount: 10,
+                  itemBuilder: (context, index) => new ProjectListItem(
+                    projectContent: projectContent(index),
+                  ),
+                  staggeredTileBuilder: (index) => new StaggeredTile.fit(
+                      (MediaQuery.of(context).size.width > 600) ? 2 : 4),
+                ),
+              ),
+            ],
           ),
-          SliverPadding(
-            padding: EdgeInsets.all(10),
-            sliver: SliverStaggeredGrid.countBuilder(
-              crossAxisCount: 4,
-              mainAxisSpacing: 15.0,
-              crossAxisSpacing: 15.0,
-              itemCount: 10,
-              itemBuilder: (context, index) =>
-              new ProjectListItem
-                (projectContent: projectContent(index % 3),),
-              staggeredTileBuilder: (index) => new StaggeredTile.fit(2),
-            ),
-          ),
-        ],
-      ),
-    );
+        ));
   }
 }

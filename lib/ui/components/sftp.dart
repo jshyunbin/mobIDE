@@ -11,22 +11,25 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobide/ui/main_page.dart';
 
-void main() => runApp(MyApp());
+class SFTPPage extends StatefulWidget {
+  @override
+  _SFTPPageState createState() => _SFTPPageState();
+}
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class _SFTPPageState extends State<SFTPPage> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'mobIDE',
-      theme: ThemeData(
-        fontFamily: 'WorkSans',
-        primarySwatch: Colors.blue,
+    return DecoratedBox(
+      decoration: BoxDecoration(
+          color: Colors.amber,
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(12.0), topLeft: Radius.circular(12.0))),
+      child: Center(
+        child: Text('SFTP Here'),
       ),
-      home: MyHomePage(title: 'mobIDE Demo'),
     );
   }
 }
