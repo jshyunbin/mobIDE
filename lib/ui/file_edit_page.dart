@@ -28,22 +28,15 @@ class FileEditPage extends StatelessWidget {
 
   final PanelController _pc = new PanelController();
 
-  // TODO: make final
-  SSHFile file;
-
-  FileEditPage({this.file}) {
-    // TODO: erase test code below
-    if (this.file == null) {
-      this.file = SSHFile("hello.txt", FileType.txt, "a", "a", "a");
-    }
-  }
+  // TODO: erase this => implemented on a lower level
+  final SSHFile file = SSHFile("hello.txt", FileType.txt, "a", "a", "a");
 
   Widget _body(context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(
-          this.file.name,
+          'Editor',
           style: Type.header4.apply(color: Colors.black),
         ),
         leading: IconButton(
