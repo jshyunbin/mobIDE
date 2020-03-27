@@ -60,11 +60,11 @@ class TextEditor extends StatefulWidget {
 class _TextEditorState extends State<TextEditor> {
   var _isLoading = true;
   var _isTyping = false;
-  var x, y;
+  var startIndex = 0;
   FocusNode focusNode;
   PieceTableWrap table;
   var controller = TextEditingController(text: "Hello");
-  Size size;
+  var startX, startY;
 
   _TextEditorState(PieceTableWrap table) {
     this.table = table;
@@ -77,13 +77,14 @@ class _TextEditorState extends State<TextEditor> {
     this.table.load(() {
       setState(() {
         this._isLoading = false;
-        this.x = 4.0;
-        this.y = 0.0;
       });
     });
+  }
+
+  Size getSize(String s) {
     var painter = TextPainter(
       text: TextSpan(
-        text: " ",
+        text: s,
         style: TextStyle(
           fontFamily: 'Menlo',
           fontSize: 16,
@@ -92,9 +93,7 @@ class _TextEditorState extends State<TextEditor> {
       maxLines: 1,
       textDirection: TextDirection.ltr,
     )..layout(minWidth: 0, maxWidth: double.infinity);
-    this.size = painter.size;
-    print(this.size.width);
-    print(this.size.height);
+    return painter.size;
   }
 
   @override
@@ -117,16 +116,16 @@ class _TextEditorState extends State<TextEditor> {
   }
 
   Widget _buildContent() {
-    var s = this.table.toString().replaceAll("\t", "    ").split('\n');
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: s.length,
+      itemCount: this.table.data.length,
       itemBuilder: (BuildContext context, int index) {
+        index += startIndex;
         var ss = "${index + 1}";
         while (ss.length < 3) ss = ' ' + ss;
         return Container(
           child: Text(
-            " $ss " + s[index],
+            " $ss " + this.table.data[index],
             style: TextStyle(
               fontFamily: 'Menlo',
               fontSize: 16,
@@ -139,45 +138,95 @@ class _TextEditorState extends State<TextEditor> {
 
   @override
   Widget build(BuildContext context) {
+    var s = this.table.currentLine().substring(0, this.table.cursorY);
+    var ss = "${this.table.cursorX + 1}";
+    while (ss.length < 3) ss = ' ' + ss;
+    var size = getSize(" $ss " + s);
+    var oneWidth = getSize("k").width;
     return this._isLoading
         ? _buildLoading()
         : Container(
-      margin: EdgeInsets.only(top: 10),
-      child: Stack(
-        children: <Widget>[
-          _buildContent(),
-          CustomPaint(
-            painter: CursorPainter((this.x + 5) * this.size.width,
-                this.y * this.size.height, 2, this.size.height, this),
-          ),
-          GestureDetector(
-            onTap: () {
-              if (this.focusNode.hasFocus) {
-                FocusScope.of(context).unfocus();
-                this._isTyping = false;
-              } else {
-                FocusScope.of(context).requestFocus(this.focusNode);
-                this._isTyping = true;
-              }
-            },
-          ),
-          Opacity(
-            child: Container(
-              child: TextField(
-                focusNode: this.focusNode,
-                onChanged: (String text) {
-                  this.controller.text = "Hello";
-                },
-                controller: this.controller,
-                maxLines: 2,
-                keyboardType: TextInputType.multiline,
-              ),
-              height: 0,
+            margin: EdgeInsets.only(top: 10),
+            child: Stack(
+              children: <Widget>[
+                _buildContent(),
+                CustomPaint(
+                  painter: CursorPainter(size.width,
+                      size.height * this.table.cursorX, 2, size.height, this),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    if (this.focusNode.hasFocus) {
+                      FocusScope.of(context).unfocus();
+                      this._isTyping = false;
+                    } else {
+                      FocusScope.of(context).requestFocus(this.focusNode);
+                      this._isTyping = true;
+                    }
+                  },
+                  onPanDown: (details) {
+                    startX = details.globalPosition.dx;
+                    startY = details.globalPosition.dy;
+                  },
+                  onPanUpdate: (details) {
+                    var dx = details.globalPosition.dx - startX;
+                    var dy = details.globalPosition.dy - startY;
+
+                    if (dy >= size.height) {
+                      startY += size.height;
+                      setState(() {
+                        this.table.moveDown();
+                        this.controller.text = this.table.currentWord();
+                      });
+                    } else if (dy <= -size.height) {
+                      startY -= size.height;
+                      setState(() {
+                        this.table.moveUp();
+                        this.controller.text = this.table.currentWord();
+                      });
+                    } else if (dx >= oneWidth) {
+                      startX += oneWidth;
+                      setState(() {
+                        this.table.moveRight();
+                        this.controller.text = this.table.currentWord();
+                      });
+                    } else if (dx <= -oneWidth) {
+                      startX -= oneWidth;
+                      setState(() {
+                        this.table.moveLeft();
+                        this.controller.text = this.table.currentWord();
+                      });
+                    }
+                  },
+                ),
+                Opacity(
+                  child: Container(
+                    child: TextField(
+                      focusNode: this.focusNode,
+                      onChanged: (String text) {
+                        var s = this.table.currentWord();
+                        if (text.length > s.length) {
+                          setState(() {
+                            this.table.write(text.runes.last);
+                            this.controller.text = this.table.currentWord();
+                          });
+                        } else if (text.length < s.length) {
+                          setState(() {
+                            this.table.backspace();
+                            this.controller.text = this.table.currentWord();
+                          });
+                        }
+                      },
+                      controller: this.controller,
+                      maxLines: 2,
+                      keyboardType: TextInputType.multiline,
+                    ),
+                    height: 0,
+                  ),
+                  opacity: 0.0,
+                ),
+              ],
             ),
-            opacity: 0.0,
-          ),
-        ],
-      ),
-    );
+          );
   }
 }

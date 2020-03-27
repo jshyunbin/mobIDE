@@ -118,10 +118,13 @@ class ProjectPage extends StatelessWidget {
               sliver: SliverList(
                 delegate: SliverChildListDelegate([
                   SizedBox(height: 20.0),
+                  Divider(
+                    color: Colors.black87,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text('Files', style: Type.header5),
+                      Text('Start Editing', style: Type.header4),
                       FlatButton(
                           onPressed: null,
                           child: Row(
@@ -132,54 +135,42 @@ class ProjectPage extends StatelessWidget {
                           ))
                     ],
                   ),
+                  SizedBox(height: 10.0),
                   DecoratedBox(
                       decoration: BoxDecoration(
-                          color: Colors.black38,
-                          borderRadius: BorderRadius.circular(12.0)),
+                        color: Colors.black54,
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
-                        child: Column(
-                          children: <Widget>[
-                            _file('test.cpp', () {
-                              Navigator.push(
-                                  context,
-                                  CupertinoPageRoute(
-                                    builder: (context) => FileEditPage(),
-                                  ));
-                            }),
-                            Divider(
-                              color: Colors.black87,
+                        child: InkWell(
+                          child: Padding(
+                            padding: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 5.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Row(
+                                  children: <Widget>[
+                                    SizedBox(width: 10.0),
+                                    Text('Editor',
+                                        style: Type.header6
+                                            .apply(color: Colors.white)),
+                                  ],
+                                ),
+                                Icon(Icons.keyboard_arrow_right,
+                                    color: Colors.white),
+                              ],
                             ),
-                            _file('test.cpp', () {
-                              Navigator.push(
-                                  context,
-                                  CupertinoPageRoute(
-                                    builder: (context) => FileEditPage(),
-                                  ));
-                            }),
-                            Divider(
-                              color: Colors.black87,
-                            ),
-                            _file('test.cpp', () {
-                              Navigator.push(
-                                  context,
-                                  CupertinoPageRoute(
-                                    builder: (context) => FileEditPage(),
-                                  ));
-                            }),
-                            Divider(
-                              color: Colors.black87,
-                            ),
-                            _file('test.cpp', () {
-                              Navigator.push(
-                                  context,
-                                  CupertinoPageRoute(
-                                    builder: (context) => FileEditPage(),
-                                  ));
-                            }),
-                          ],
+                          ),
+                          onTap: () => Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) => FileEditPage(),
+                              )),
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
                         ),
-                      ))
+                      )),
                 ]),
               ),
             ),
