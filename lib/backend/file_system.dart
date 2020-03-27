@@ -37,7 +37,7 @@ class SSHFile {
 //    }
 //    return File(filePath).readAsStringSync();
     //TODO: fix file system
-    return "";
+    return "  hello";
   }
 
   Future<void> write(String contents) async {
