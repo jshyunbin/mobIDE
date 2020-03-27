@@ -64,7 +64,8 @@ class FileEditPage extends StatelessWidget {
         controller: _pc,
         minHeight: 0,
         maxHeight: MediaQuery.of(context).size.height -
-            MediaQuery.of(context).padding.top,
+            MediaQuery.of(context).viewInsets.top -
+            MediaQuery.of(context).viewPadding.top,
         panel: EditorPanel(),
         body: _body(context),
       ),
