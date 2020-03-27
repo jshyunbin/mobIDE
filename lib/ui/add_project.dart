@@ -35,7 +35,7 @@ class AddProject extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          FlatButton(child: Text('Cancle', style: Type.body1
+                          FlatButton(child: Text('Cancel', style: Type.body1
                               .apply(color: Colors.blue),),
                             onPressed: () => Navigator.pop(context),
                           ),
