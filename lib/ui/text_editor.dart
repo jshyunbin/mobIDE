@@ -51,7 +51,7 @@ class _TextEditorState extends State<TextEditor> {
   var startIndex = 0;
   FocusNode focusNode;
   PieceTableWrap table;
-  var controller = TextEditingController(text: "Hello");
+  var controller = TextEditingController(text: "");
   var startX, startY;
 
   _TextEditorState(PieceTableWrap table) {
@@ -192,6 +192,7 @@ class _TextEditorState extends State<TextEditor> {
                     child: TextField(
                       focusNode: this.focusNode,
                       onChanged: (String text) {
+                        print("${this.table.currentWord()} -> $text");
                         var s = this.table.currentWord();
                         if (text.length > s.length) {
                           setState(() {
