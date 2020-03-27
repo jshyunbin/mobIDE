@@ -29,13 +29,15 @@ class SSHFile {
   SSHFile(this.name, this.type, this.path, this.sshHost, this.sshId);
 
   Future<String> read() async {
-    var dir = await getApplicationDocumentsDirectory();
-    var filePath = p.join(dir.path, sshHost, sshId, path, name);
-    print(filePath);
-    if (FileSystemEntity.typeSync(filePath) == FileSystemEntityType.notFound) {
-      throw 'File Not Found!';
-    }
-    return File(filePath).readAsStringSync();
+//    var dir = await getApplicationDocumentsDirectory();
+//    var filePath = p.join(dir.path, sshHost, sshId, path, name);
+//    print(filePath);
+//    if (FileSystemEntity.typeSync(filePath) == FileSystemEntityType.notFound) {
+//      throw 'File Not Found!';
+//    }
+//    return File(filePath).readAsStringSync();
+    //TODO: fix file system
+    return "";
   }
 
   Future<void> write(String contents) async {
