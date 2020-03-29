@@ -178,6 +178,7 @@ class _TextEditorState extends State<TextEditor> {
                         this.table.moveDown();
                         if(this.table.cursorX - this.startIndex >= 20) {
                           this.startIndex++;
+                          startY -= size.height;
                         }
                         this.controller.text = this.table.currentWord();
                       });
@@ -187,6 +188,7 @@ class _TextEditorState extends State<TextEditor> {
                         this.table.moveUp();
                         if(this.table.cursorX - this.startIndex <= 0 && this.startIndex > 0) {
                           this.startIndex--;
+                          startY += size.height;
                         }
                         this.controller.text = this.table.currentWord();
                       });
