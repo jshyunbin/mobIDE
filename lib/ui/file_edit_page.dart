@@ -14,7 +14,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobide/backend/file_system.dart';
 import 'package:mobide/ui/components/editor_panel.dart';
-import 'package:mobide/ui/text_editor.dart';
+import 'package:mobide/ui/components/editor_tab.dart';
 import 'package:mobide/ui/theme/style.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -50,7 +50,7 @@ class FileEditPage extends StatelessWidget {
           ),
         ],
       ),
-      body: TextEditor.fromFile(file: this.file),
+      body: EditorTab(),
     );
   }
 
