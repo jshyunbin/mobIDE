@@ -125,7 +125,7 @@ class _HomePageState extends State<HomePage> {
 
   void loadData() async {
     projects = await dbHandler.getData(DBType.project);
-    setState(() {});
+    print(projects);
   }
 
   ProjectContent projectContent(int i) {
@@ -142,13 +142,17 @@ class _HomePageState extends State<HomePage> {
 
   void searchChanged(String str) {
     setState(() {
+      loadData();
       //TODO: change list content when searched
     });
   }
 
   void _addPressed(context) {
     showCupertinoModalPopup(
-        context: context, builder: (context) => AddProject());
+        context: context,
+        builder: (context) => AddProject(
+              dbHandler: dbHandler,
+            ));
   }
 
   @override

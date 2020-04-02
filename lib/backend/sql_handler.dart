@@ -85,11 +85,11 @@ class SSH implements DataType {
   SSH.fromMap(Map<String, dynamic> map)
       : this(
       id: map['id'],
-      name: map['name'],
-      host: map['host'],
-      port: map['port'],
-      username: map['username'],
-      password: map['password']);
+            name: map['name'],
+            host: map['host'],
+            port: int.parse(map['port']),
+            username: map['username'],
+            password: map['password']);
 
   Map<String, dynamic> toMap() {
     return {

@@ -17,8 +17,40 @@ import 'package:mobide/backend/sql_handler.dart';
 import 'package:mobide/ui/theme/style.dart';
 
 class AddProject extends StatelessWidget {
+  AddProject({Key key, @required this.dbHandler}) : super(key: key);
+
+  final DatabaseHandler dbHandler;
+
+  final List<String> texts = List(7);
+
+  void _textChange(String text, int index) {
+    texts[index] = text;
+  }
+
   void _onAdd(context) {
-    DatabaseHandler dbHandler = DatabaseHandler();
+    var time = DateTime.now();
+    var date =
+        "${time.year}-${time.month}-${time.day} ${time.hour}:${time.minute}";
+    print(texts);
+    dbHandler.insert(
+        DBType.ssh,
+        SSH.fromMap({
+          'name': texts[2],
+          'host': texts[2],
+          'port': texts[3],
+          'username': texts[4],
+          'password': texts[5],
+        }));
+    dbHandler.insert(
+        DBType.project,
+        Project.fromMap({
+          'name': texts[0],
+          'description': texts[1],
+          'initDate': date,
+          'modDate': date,
+          'localDir': '',
+          'sshName': texts[2],
+        }));
     Navigator.pop(context);
   }
 
@@ -69,30 +101,37 @@ class AddProject extends StatelessWidget {
                             CupertinoTextField(
                               keyboardType: TextInputType.text,
                               placeholder: 'Project Title',
+                              onChanged: (text) => _textChange(text, 0),
                             ),
                             CupertinoTextField(
                               keyboardType: TextInputType.text,
                               placeholder: 'Project Description',
+                              onChanged: (text) => _textChange(text, 1),
                             ),
                             CupertinoTextField(
                               keyboardType: TextInputType.text,
                               placeholder: 'SSH host',
+                              onChanged: (text) => _textChange(text, 2),
                             ),
                             CupertinoTextField(
                               keyboardType: TextInputType.text,
                               placeholder: 'SSH port',
+                              onChanged: (text) => _textChange(text, 3),
                             ),
                             CupertinoTextField(
                               keyboardType: TextInputType.text,
                               placeholder: 'SSH username',
+                              onChanged: (text) => _textChange(text, 4),
                             ),
                             CupertinoTextField(
                               keyboardType: TextInputType.text,
                               placeholder: 'SSH password',
+                              onChanged: (text) => _textChange(text, 5),
                             ),
                             CupertinoTextField(
                               keyboardType: TextInputType.text,
                               placeholder: 'Project Path',
+                              onChanged: (text) => _textChange(text, 6),
                             ),
                           ],
                         ),
