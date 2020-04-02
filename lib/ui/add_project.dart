@@ -13,9 +13,15 @@
 //limitations under the License.
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mobide/backend/sql_handler.dart';
 import 'package:mobide/ui/theme/style.dart';
 
 class AddProject extends StatelessWidget {
+  void _onAdd(context) {
+    DatabaseHandler dbHandler = DatabaseHandler();
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -48,7 +54,7 @@ class AddProject extends StatelessWidget {
                               'Add',
                               style: Type.body1.apply(color: Colors.blue),
                             ),
-                            onPressed: null,
+                            onPressed: () => _onAdd(context),
                           ),
                         ],
                       ),

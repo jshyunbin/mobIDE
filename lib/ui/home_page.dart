@@ -14,6 +14,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:mobide/backend/sql_handler.dart';
 import 'package:mobide/ui/add_project.dart';
 import 'package:mobide/ui/project_page.dart';
 import 'package:mobide/ui/theme/style.dart';
@@ -114,26 +115,28 @@ class ProjectListItem extends StatelessWidget {
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
 
-
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  DatabaseHandler dbHandler = DatabaseHandler();
+  List projects = [];
+
+  void loadData() async {
+    projects = await dbHandler.getData(DBType.project);
+    setState(() {});
+  }
+
   ProjectContent projectContent(int i) {
+    Project project = projects[i];
+    Map data = project.toMap();
     return ProjectContent(
-      title: 'sample $i',
-      description: (i % 3 != 0)
-          ? ((i % 3 == 1)
-          ? 'Lorem ipsum dolor sit amet, '
-          'consectetur '
-          : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed faucibus felis vitae cursus convallis. Curabitur tincidunt nisi eget risus dignissim blandit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vivamus at fermentum nunc.'
-          'adipiscing elit.')
-          : 'Lorem ipsum dolor sit amet, consectetur '
-          'adipiscing elit. Sed faucibus felis vitae cursus convallis. Curabitur tincidunt nisi eget risus dignissim blandit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vivamus at fermentum nunc. In at sapien vitae lacus pharetra euismod vel ac sem. Morbi diam elit, pretium volutpat laoreet id, semper a dolor. In lacus quam, bibendum non ante ac, imperdiet tempus nisi. Nulla ac neque sed mauris aliquet pulvinar.',
-      sshId: 'jhb-gram',
-      initializedDate: '2019-12-24',
-      modifiedDate: '2019-12-24',
+      title: data['name'],
+      description: data['description'],
+      sshId: data['sshName'],
+      initializedDate: data['initDate'],
+      modifiedDate: data['modDate'],
     );
   }
 
@@ -150,6 +153,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    loadData();
     return SafeArea(
         bottom: false,
         child: CupertinoScrollbar(
@@ -220,7 +224,7 @@ class _HomePageState extends State<HomePage> {
                   crossAxisCount: 4,
                   mainAxisSpacing: 15.0,
                   crossAxisSpacing: 15.0,
-                  itemCount: 10,
+                  itemCount: projects.length,
                   itemBuilder: (context, index) => new ProjectListItem(
                     projectContent: projectContent(index),
                   ),
@@ -232,4 +236,5 @@ class _HomePageState extends State<HomePage> {
           ),
         ));
   }
+
 }
