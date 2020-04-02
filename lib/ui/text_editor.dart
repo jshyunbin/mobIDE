@@ -11,6 +11,8 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:loading/indicator/ball_scale_indicator.dart';
 import 'package:loading/loading.dart';
@@ -22,7 +24,8 @@ class CursorPainter extends CustomPainter {
   var w, h;
   var editor;
 
-  CursorPainter(double x, double y, double w, double h, _TextEditorState editor) {
+  CursorPainter(
+      double x, double y, double w, double h, _TextEditorState editor) {
     this.x = x;
     this.y = y;
     this.w = w;
@@ -118,7 +121,7 @@ class _TextEditorState extends State<TextEditor> {
   Widget _buildContent() {
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: this.table.data.length - startIndex,
+      itemCount: min(this.table.data.length - startIndex, 40),
       itemBuilder: (BuildContext context, int index) {
         index += startIndex;
         var ss = "${index + 1}";
@@ -138,11 +141,16 @@ class _TextEditorState extends State<TextEditor> {
 
   @override
   Widget build(BuildContext context) {
-    var s = this.table.currentLine().substring(0, this.table.cursorY);
+    var s = this.table.currentLine();
     var ss = "${this.table.cursorX + 1}";
     while (ss.length < 3) ss = ' ' + ss;
-    var size = getSize(" $ss " + s);
-    var oneWidth = getSize("k").width;
+    var cursor = getSize(" $ss " + s.substring(0, this.table.cursorY));
+    var leftWidth = cursor.width -
+        getSize(" $ss " + s.substring(0, max(this.table.cursorY - 1, 0))).width;
+    var rightWidth =
+        getSize(" $ss " + s.substring(0, min(this.table.cursorY + 1, s.length)))
+                .width -
+            cursor.width;
     return this._isLoading
         ? _buildLoading()
         : Container(
@@ -151,8 +159,12 @@ class _TextEditorState extends State<TextEditor> {
               children: <Widget>[
                 _buildContent(),
                 CustomPaint(
-                  painter: CursorPainter(size.width,
-                      size.height * (this.table.cursorX - this.startIndex), 2, size.height, this),
+                  painter: CursorPainter(
+                      cursor.width,
+                      cursor.height * (this.table.cursorX - this.startIndex),
+                      2,
+                      cursor.height,
+                      this),
                 ),
                 GestureDetector(
                   onTap: () {
@@ -172,38 +184,49 @@ class _TextEditorState extends State<TextEditor> {
                     var dx = details.globalPosition.dx - startX;
                     var dy = details.globalPosition.dy - startY;
 
-                    if (dy >= size.height) {
-                      startY += size.height;
+                    if (dy >= cursor.height) {
+                      startY += cursor.height;
                       setState(() {
                         this.table.moveDown();
-                        if(this.table.cursorX - this.startIndex >= 20) {
+                        if (this.table.cursorX - this.startIndex >= 20) {
                           this.startIndex++;
-                          startY -= size.height;
+                          startY -= cursor.height;
                         }
                         this.controller.text = this.table.currentWord();
                       });
-                    } else if (dy <= -size.height) {
-                      startY -= size.height;
+                    } else if (dy <= -cursor.height) {
+                      startY -= cursor.height;
                       setState(() {
                         this.table.moveUp();
-                        if(this.table.cursorX - this.startIndex <= 0 && this.startIndex > 0) {
+                        if (this.table.cursorX - this.startIndex <= 0 &&
+                            this.startIndex > 0) {
                           this.startIndex--;
-                          startY += size.height;
+                          startY += cursor.height;
                         }
                         this.controller.text = this.table.currentWord();
                       });
-                    } else if (dx >= oneWidth) {
-                      startX += oneWidth;
-                      setState(() {
-                        this.table.moveRight();
-                        this.controller.text = this.table.currentWord();
-                      });
-                    } else if (dx <= -oneWidth) {
-                      startX -= oneWidth;
-                      setState(() {
-                        this.table.moveLeft();
-                        this.controller.text = this.table.currentWord();
-                      });
+                    } else if (dx > 0) {
+                      if (rightWidth > 0 && dx >= rightWidth) {
+                        startX += rightWidth;
+                        setState(() {
+                          this.table.moveRight();
+                          this.controller.text = this.table.currentWord();
+                        });
+                      }
+                      if (rightWidth == 0) {
+                        startX = details.globalPosition.dx;
+                      }
+                    } else if (dx < 0) {
+                      if (leftWidth > 0 && dx <= -leftWidth) {
+                        startX -= leftWidth;
+                        setState(() {
+                          this.table.moveLeft();
+                          this.controller.text = this.table.currentWord();
+                        });
+                      }
+                      if (leftWidth == 0) {
+                        startX = details.globalPosition.dx;
+                      }
                     }
                   },
                 ),
@@ -217,10 +240,11 @@ class _TextEditorState extends State<TextEditor> {
                         if (text.length > s.length) {
                           setState(() {
                             this.table.write(text.runes.last);
-                            if(this.table.cursorX - this.startIndex <= 0 && this.startIndex > 0) {
+                            if (this.table.cursorX - this.startIndex <= 0 &&
+                                this.startIndex > 0) {
                               this.startIndex--;
                             }
-                            if(this.table.cursorX - this.startIndex >= 20) {
+                            if (this.table.cursorX - this.startIndex >= 20) {
                               this.startIndex++;
                             }
                             this.controller.text = this.table.currentWord();
@@ -228,10 +252,11 @@ class _TextEditorState extends State<TextEditor> {
                         } else if (text.length < s.length) {
                           setState(() {
                             this.table.backspace();
-                            if(this.table.cursorX - this.startIndex <= 0 && this.startIndex > 0) {
+                            if (this.table.cursorX - this.startIndex <= 0 &&
+                                this.startIndex > 0) {
                               this.startIndex--;
                             }
-                            if(this.table.cursorX - this.startIndex >= 20) {
+                            if (this.table.cursorX - this.startIndex >= 20) {
                               this.startIndex++;
                             }
                             this.controller.text = this.table.currentWord();
